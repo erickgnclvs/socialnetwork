@@ -1,4 +1,4 @@
-# Project Overview
+# Project Overview:
 
 **Sprint 1: Project setup and user registration**
 - Set up your development environment (e.g., install IntelliJ Ultimate, MySQL, etc.)
