@@ -22,12 +22,13 @@ public class User {
     private String password;
     private String name;
     private String biography;
-    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Column(nullable = false)
     private boolean isActive;
 
     /**
-     * The following fields are yet to be implemented
-     */
+     *
+     * fields not implemented yet
+     *
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -36,4 +37,64 @@ public class User {
     private List<Follow> following;
     @OneToMany(mappedBy = "followee")
     private List<Follow> followers;
+    **/
+
+    public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
