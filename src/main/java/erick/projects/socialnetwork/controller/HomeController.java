@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    @GetMapping("/")
+    public String redirectHomePage() {
+        return "redirect:/home";
+    }
+
     @GetMapping("/home")
     public String showHomePage(Model model, HttpSession session) {
         // check if user is logged in

@@ -3,13 +3,15 @@ package erick.projects.socialnetwork.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 /**
  * This Class represents the Users and builds the table in the database for them
  */
 
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +26,14 @@ public class User {
     private String biography;
     @Column(nullable = false)
     private boolean isActive;
-
-    /**
-     *
-     * fields not implemented yet
-     *
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Like> likes;
-    @OneToMany(mappedBy = "follower")
-    private List<Follow> following;
-    @OneToMany(mappedBy = "followee")
-    private List<Follow> followers;
-    **/
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Like> likes;
+//    @OneToMany(mappedBy = "follower")
+//    private List<Follow> following;
+//    @OneToMany(mappedBy = "followee")
+//    private List<Follow> followers;
 
     public User() {
     }
@@ -92,6 +88,19 @@ public class User {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", biography='" + biography + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 
     public void setActive(boolean active) {
