@@ -6,8 +6,15 @@
 <body>
 <h1>Registration</h1>
 <form method="POST" action="/register" th:object="${user}">
-    <input type="text" th:field="*{username}"/>
-    <input type="password" th:field="*{password}"/>
+    <label>username
+        <input type="text" th:field="*{username}"/>
+    </label>
+    <label>email
+        <input type="text" th:field="*{email}"/>
+    </label>
+    <label>password
+        <input type="password" th:field="*{password}"/>
+    </label>
     <input type="submit" value="Register"/>
 </form>
 </body>
