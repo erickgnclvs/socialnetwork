@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -64,6 +65,18 @@ public class UserController {
         return "redirect:/login";
     }
 
-
+    @GetMapping("/{username}")
+    public String showUserProfile(@PathVariable String username, Model model) {
+        // retrieve user from database by username
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            // if user is found, add it to the model
+            model.addAttribute("user", user);
+            return "profile";
+        } else {
+            // if user is not found, redirect to error page or show error message
+            return "redirect:/error";
+        }
+    }
 
 }
