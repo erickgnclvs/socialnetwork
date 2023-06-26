@@ -2,6 +2,7 @@ package erick.projects.socialnetwork.controller;
 
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
@@ -40,17 +41,27 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute("user") User user, Model model) {
+    public String loginUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
         // authenticate user
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
             // if authentication is successful, redirect to home page
+            // save login to session
+            session.setAttribute("user", user);
             return "redirect:/home";
         } else {
             // if authentication fails, add error message and return to login page
             model.addAttribute("error", "Invalid username or password");
             return "login";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logoutUser(HttpSession session) {
+        // invalidate session
+        session.invalidate();
+        // redirect to login page
+        return "redirect:/login";
     }
 
 
