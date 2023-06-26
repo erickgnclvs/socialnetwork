@@ -34,4 +34,13 @@ public class FollowController {
         followService.follow(follower, followed);
         return "redirect:/home";
     }
+
+    @PostMapping("/unfollow/{username}")
+    public String unfollowUser(@PathVariable("username") String username, HttpSession session) {
+        User tmp = (User) session.getAttribute("user");
+        User follower = userService.findByUsername(tmp.getUsername());
+        User followed = userService.findByUsername(username);
+        followService.unfollow(follower, followed);
+        return "redirect:/home";
+    }
 }

@@ -4,9 +4,12 @@
     <title>user profile</title>
 </head>
 <body>
-<h1>user</h1>
+<h1 th:text="${user.getUsername()}" >user</h1>
 <form th:action="@{/follow/{username}(username=${username})}" method="post">
     <button type="submit">Follow</button>
+</form>
+<form th:action="@{/unfollow/{username}(username=${username})}" method="post">
+    <button type="submit">Unfollow</button>
 </form>
 </body>
 </html>

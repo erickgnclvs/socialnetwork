@@ -23,4 +23,11 @@ public class FollowService {
         follow.setFollowed(followed);
         followRepository.save(follow);
     }
+
+    public void unfollow(User follower, User followed) {
+        Follow follow = followRepository.findByFollowerAndFollowed(follower, followed);
+        if (follow != null) {
+            followRepository.delete(follow);
+        }
+    }
 }
