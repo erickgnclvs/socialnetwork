@@ -30,4 +30,9 @@ public class FollowService {
             followRepository.delete(follow);
         }
     }
+
+    public boolean isFollowing(User follower, User followed) {
+        // check if follow relationship exists
+        return followRepository.existsByFollowerAndFollowed(follower, followed);
+    }
 }

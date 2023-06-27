@@ -1,10 +1,10 @@
 package erick.projects.socialnetwork.controller;
 
 import erick.projects.socialnetwork.model.User;
+import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
-
+    private final FollowService followService;
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(FollowService followService, UserService userService) {
+        this.followService = followService;
         this.userService = userService;
     }
 
@@ -66,16 +67,29 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public String showUserProfile(@PathVariable String username, Model model) {
-        // retrieve user from database by username
-        User user = userService.findByUsername(username);
-        if (user != null) {
-            // if user is found, add it to the model
-            model.addAttribute("user", user);
-            return "profile";
+    public String showUserProfile(@PathVariable String username, Model model, HttpSession session) {
+        // check if user is logged in
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            // if user is logged in...
+            // retrieve user from database by username
+            User sessionUser = userService.findByUsername(tmp.getUsername());
+            model.addAttribute("sessionUser", sessionUser);
+            User user = userService.findByUsername(username);
+            if (user != null) {
+                // if user is found, add it to the model
+                model.addAttribute("user", user);
+                // check if session user is following accessed user
+                boolean isFollowing = followService.isFollowing(sessionUser, user);
+                model.addAttribute("isFollowing", isFollowing);
+                return "profile";
+            } else {
+                // if user is not found, redirect to error page or show error message
+                return "redirect:/error";
+            }
         } else {
-            // if user is not found, redirect to error page or show error message
-            return "redirect:/error";
+            // if user is not logged in, redirect to login page
+            return "redirect:/login";
         }
     }
 

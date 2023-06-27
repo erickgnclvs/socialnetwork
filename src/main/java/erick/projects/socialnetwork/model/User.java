@@ -96,7 +96,6 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", biography='" + biography + '\'' +
                 ", isActive=" + isActive +

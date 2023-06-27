@@ -4,12 +4,21 @@
     <title>user profile</title>
 </head>
 <body>
-<h1 th:text="${user.getUsername()}" >user</h1>
-<form th:action="@{/follow/{username}(username=${username})}" method="post">
-    <button type="submit">Follow</button>
-</form>
-<form th:action="@{/unfollow/{username}(username=${username})}" method="post">
-    <button type="submit">Unfollow</button>
-</form>
+<h1 th:text="${user.getUsername()}">user</h1>
+<div th:if="${sessionUser.getUsername() != username}">
+    <div th:if="${isFollowing}">
+        <form th:action="@{/unfollow/{username}(username=${username})}" method="post">
+            <button type="submit">Unfollow</button>
+        </form>
+    </div>
+    <div th:unless="${isFollowing}">
+        <form th:action="@{/follow/{username}(username=${username})}" method="post">
+            <button type="submit">Follow</button>
+        </form>
+    </div>
+</div>
+<div th:if="${sessionUser.getUsername() == username}">
+    <p>edit profile</p>
+</div>
 </body>
 </html>
