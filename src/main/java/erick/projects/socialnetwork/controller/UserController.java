@@ -93,4 +93,29 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{username}/edit")
+    public String showEditProfile(@PathVariable String username, Model model, HttpSession session) {
+        // check if user is logged in
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            // if user is logged in...
+            // retrieve user from database by username
+            User sessionUser = userService.findByUsername(tmp.getUsername());
+            User user = userService.findByUsername(username);
+            if (user.equals(sessionUser)) {
+                model.addAttribute("user", user);
+                // if user from path is the same session
+                System.out.println("line 108 user is equal session user");
+                //proceed to edit profile
+                return "redirect:/home";
+            } else {
+                // if user is not equal to session
+                return "redirect:/error";
+            }
+        } else {
+            // if user is not logged in, redirect to login page
+            return "redirect:/login";
+        }
+    }
+
 }

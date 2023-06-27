@@ -18,7 +18,7 @@
     </div>
 </div>
 <div th:if="${sessionUser.getUsername() == username}">
-    <form th:action="@{/{username}/edit(username=${username})}" method="post">
+    <form th:action="@{/{username}/edit(username=${username})}" method="get">
         <button type="submit">Edit Profile</button>
     </form>
 </div>
