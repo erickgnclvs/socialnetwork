@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class PostService {
         List<User> followedUsers = follows.stream().map(Follow::getFollowed).toList();
         List<Post> feedPosts = postRepository.findByUserIn(followedUsers);
         feedPosts.addAll(user.getPosts());
+        feedPosts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
         return feedPosts;
     }
 
