@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.format.DateTimeFormatter;
+
 @Controller
 public class UserController {
     private final FollowService followService;
@@ -78,6 +80,8 @@ public class UserController {
             User user = userService.findByUsername(username);
             if (user != null) {
                 // if user is found, add it to the model
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
+                model.addAttribute("formatter", formatter);
                 model.addAttribute("user", user);
                 // check if session user is following accessed user
                 boolean isFollowing = followService.isFollowing(sessionUser, user);

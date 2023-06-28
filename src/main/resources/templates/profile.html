@@ -22,5 +22,17 @@
         <button type="submit">Edit Profile</button>
     </form>
 </div>
+<table th:each="post: ${user.getPosts()}">
+    <tr>
+        <td th:text="${post.getContent()}">content</td>
+        <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
+        <td>
+            <!--    TODO        <form th:action="@{/{username}(username=${follower.getFollower().getUsername()})}" method="get">-->
+            <form>
+                <button type="submit">like/dislike</button>
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
