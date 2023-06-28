@@ -13,9 +13,9 @@
         <tr>
             <td th:text="${follow.getFollowed().getUsername()}">username</td>
             <td>
-                <form th:action="@{/{username}(username=${follow.getFollowed().getUsername()})}" method="get">
+                <a th:href="@{/{username}(username=${follow.getFollower().getUsername()})}">
                     <button type="submit">view profile</button>
-                </form>
+                </a>
             </td>
         </tr>
     </table>
