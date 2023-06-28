@@ -2,6 +2,7 @@ package erick.projects.socialnetwork.controller;
 
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
+import erick.projects.socialnetwork.service.LikeService;
 import erick.projects.socialnetwork.service.PostService;
 import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -13,19 +14,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 public class PostController {
     private final PostService postService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
-    public PostController(PostService postService, UserService userService) {
+    public PostController(PostService postService, UserService userService, LikeService likeService) {
         this.postService = postService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     public PostService getPostService() {
@@ -60,8 +61,8 @@ public class PostController {
             // if user is logged in, add any necessary data to the model
             // ...
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
-            model.addAttribute("formatter", formatter);
             Post post = postService.getPostById(postId);
+            model.addAttribute("formatter", formatter);
             model.addAttribute("post", post);
             model.addAttribute("user", sessionUser);
             return "post";

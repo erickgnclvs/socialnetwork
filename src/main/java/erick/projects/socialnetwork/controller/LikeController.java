@@ -31,6 +31,15 @@ public class LikeController {
         return "redirect:/post/{postId}";
     }
 
+    @PostMapping("/unlike/{postId}")
+    public String unlikePost(@PathVariable("postId") Long postId, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("user");
+        User user = userService.findByUsername(sessionUser.getUsername());
+        Post post = postService.getPostById(postId);
+        likeService.unlikePost(post, user);
+        return "redirect:/post/{postId}";
+    }
+
     public UserService getUserService() {
         return userService;
     }

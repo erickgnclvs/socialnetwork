@@ -27,4 +27,8 @@ public class LikeService {
             likeRepository.delete(like);
         }
     }
+
+    public boolean isPostLikedByUser(Post post, User sessionUser) {
+        return likeRepository.findByPostAndUser(post, sessionUser) != null;
+    }
 }

@@ -10,9 +10,16 @@
         <td th:text="${post.getUser().getUsername()}">username</td>
         <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
         <td th:text="${post.getLikes().size()} + ' likes'">likes</td>
-        <td>
+        <!-- if post is liked by the current user -->
+        <td th:if="${}">
+            <form th:action="@{/unlike/{postId}(postId=${post.getId()})}" method="post">
+                <button type="submit">unlike</button>
+            </form>
+        </td>
+        <!-- if post is not liked by the current user -->
+        <td th:unless="${}">
             <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">
-                <button type="submit">like/dislike</button>
+                <button type="submit">like</button>
             </form>
         </td>
     </tr>
