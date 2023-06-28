@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>following</title>
+</head>
+<body>
+<h1 th:text="${user.getUsername()} + '\'s following'">user's following</h1>
+<div th:if="${following.isEmpty()}">
+    <p>not following nobody</p>
+</div>
+<div th:if="${!following.isEmpty()}">
+    <table th:each="follow: ${following}">
+        <tr>
+            <td th:text="${follow.getFollowed().getUsername()}">username</td>
+            <td>
+                <form th:action="@{/{username}(username=${follow.getFollowed().getUsername()})}" method="get">
+                    <button type="submit">view profile</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

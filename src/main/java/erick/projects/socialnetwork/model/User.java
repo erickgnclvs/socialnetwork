@@ -28,14 +28,38 @@ public class User {
     private boolean isActive;
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
+    @OneToMany(mappedBy = "follower")
+    private List<Follow> following;
+    @OneToMany(mappedBy = "followed")
+    private List<Follow> followers;
+
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<Like> likes;
-//    @OneToMany(mappedBy = "follower")
-//    private List<Follow> following;
-//    @OneToMany(mappedBy = "followee")
-//    private List<Follow> followers;
-
     public User() {
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void setFollowing(List<Follow> following) {
+        this.following = following;
+    }
+
+    public List<Follow> getFollowing() {
+        return following;
+    }
+
+    public List<Follow> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Follow> followers) {
+        this.followers = followers;
     }
 
     public Long getId() {
