@@ -53,4 +53,8 @@ public class PostService {
     public PostRepository getPostRepository() {
         return postRepository;
     }
+
+    public Post getPostById(Long postId) {
+        return postRepository.getPostById(postId);
+    }
 }
