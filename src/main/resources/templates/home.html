@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>this is the homepage</h1>
+<h1>homepage</h1>
+<h1 th:text="'logged in as ' + ${sessionUser.getUsername()}"></h1>
 <a href="/logout">logout</a>
 <a href="/create-post">create post</a>
+<table th:each="post: ${feedPosts}">
+    <tr>
+        <td th:text="${post.getContent()}">content</td>
+        <td th:text="${post.getUser().getUsername()}">username</td>
+        <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
+        <td>
+<!--            <form th:action="@{/{username}(username=${follower.getFollower().getUsername()})}" method="get">-->
+            <form>
+                <button type="submit">like/dislike</button>
+            </form>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
