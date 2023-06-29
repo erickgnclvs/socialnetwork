@@ -28,7 +28,10 @@
     <tr>
         <td th:text="${post.getContent()}">content</td>
         <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
-<!--        <td>-->
+        <td>
+            <a th:href="@{/post/{postId}(postId=${post.getId()})}">view post</a>
+        </td>
+        <!--        <td>-->
 <!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
 <!--                <button type="submit">like/dislike</button>-->
 <!--            </form>-->
