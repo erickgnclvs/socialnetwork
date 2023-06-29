@@ -54,6 +54,18 @@ public class PostController {
         return "redirect:/home";
     }
 
+    @PostMapping("/post/{postId}/delete")
+    public String deletePost(@PathVariable("postId") Long postId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        Post post = postService.getPostById(postId);
+        if (post.getUser().getUsername().equals(user.getUsername())) {
+            postService.deletePostById(postId);
+            return "redirect:/home";
+        } else {
+            return "redirect:/error";
+        }
+    }
+
     @GetMapping("post/{postId}")
     public String showPostById(@PathVariable("postId") Long postId, Model model, HttpSession session) {
         // check if user is logged in

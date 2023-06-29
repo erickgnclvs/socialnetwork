@@ -64,4 +64,9 @@ public class PostService {
     public LikeRepository getLikeRepository() {
         return likeRepository;
     }
+
+    public void deletePostById(Long postId) {
+        Post post = getPostById(postId);
+        postRepository.delete(post);
+    }
 }

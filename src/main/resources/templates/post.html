@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
     <meta charset="UTF-8">
     <title>post page</title>
 </head>
@@ -11,20 +12,25 @@
         <td th:text="${post.getContent()}">content</td>
         <td th:text="${post.getUser().getUsername()}">username</td>
         <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
-<!--        <td th:text="${post.getLikes().size()} + ' likes'">likes</td>-->
-<!--         if post is liked by the current user -->
-<!--        <td>-->
-<!--            <form th:action="@{/unlike/{postId}(postId=${post.getId()})}" method="post">-->
-<!--                <button type="submit">unlike</button>-->
-<!--            </form>-->
-<!--        </td>-->
-<!--         if post is not liked by the current user -->
-<!--        <td>-->
-<!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
-<!--                <button type="submit">like</button>-->
-<!--            </form>-->
-<!--        </td>-->
+        <!--        <td th:text="${post.getLikes().size()} + ' likes'">likes</td>-->
+        <!--         if post is liked by the current user -->
+        <!--        <td>-->
+        <!--            <form th:action="@{/unlike/{postId}(postId=${post.getId()})}" method="post">-->
+        <!--                <button type="submit">unlike</button>-->
+        <!--            </form>-->
+        <!--        </td>-->
+        <!--         if post is not liked by the current user -->
+        <!--        <td>-->
+        <!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
+        <!--                <button type="submit">like</button>-->
+        <!--            </form>-->
+        <!--        </td>-->
     </tr>
 </table>
+<div th:if="${post.getUser().getUsername() == user.getUsername()}">
+    <form th:action="@{/post/{postId}/delete(postId=${post.getId()})}" method="post">
+        <button type="submit" >delete</button>
+    </form>
+</div>
 </body>
 </html>
