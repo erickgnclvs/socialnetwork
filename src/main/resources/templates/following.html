@@ -4,8 +4,10 @@
     <title>following</title>
 </head>
 <body>
-<h1 th:text="${user.getUsername()} + '\'s following'">user's following</h1>
-<div th:if="${following.isEmpty()}">
+<a th:text="${user.getUsername()}" th:href="@{/{username}(username=${user.getUsername()})}">user's followers</a>
+<p>following</p>
+<a th:href="@{/home}">home</a>
+    <div th:if="${following.isEmpty()}">
     <p>not following nobody</p>
 </div>
 <div th:if="${!following.isEmpty()}">
@@ -13,7 +15,7 @@
         <tr>
             <td th:text="${follow.getFollowed().getUsername()}">username</td>
             <td>
-                <a th:href="@{/{username}(username=${follow.getFollower().getUsername()})}">
+                <a th:href="@{/{username}(username=${follow.getFollowed().getUsername()})}">
                     <button type="submit">view profile</button>
                 </a>
             </td>

@@ -4,7 +4,9 @@
     <title>followers</title>
 </head>
 <body>
-<h1 th:text="${user.getUsername()} + '\'s followers'">user's followers</h1>
+<a th:text="${user.getUsername()}" th:href="@{/{username}(username=${user.getUsername()})}">user's followers</a>
+<p>followers</p>
+<a th:href="@{/home}">home</a>
 <div th:if="${followers.isEmpty()}">
     <p>0 followers</p>
 </div>

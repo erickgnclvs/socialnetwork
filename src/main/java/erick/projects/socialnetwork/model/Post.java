@@ -13,10 +13,10 @@ public class Post {
     private Long id;
     @Column(nullable = false, length = 280)
     private String content;
-    private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post")
     private List<Like> likes;

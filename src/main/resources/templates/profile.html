@@ -3,6 +3,8 @@
 <head>
     <title>user profile</title>
 </head>
+<a th:href="@{/{username}/followers(username=${user.getUsername()})}">followers</a>
+<a th:href="@{/{username}/following(username=${user.getUsername()})}">following</a>
 <body>
 <h1 th:text="${user.getUsername()}">user</h1>
 <div th:if="${sessionUser.getUsername() != username}">
@@ -26,11 +28,11 @@
     <tr>
         <td th:text="${post.getContent()}">content</td>
         <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
-        <td>
-            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">
-                <button type="submit">like/dislike</button>
-            </form>
-        </td>
+<!--        <td>-->
+<!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
+<!--                <button type="submit">like/dislike</button>-->
+<!--            </form>-->
+<!--        </td>-->
     </tr>
 
 </table>

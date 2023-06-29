@@ -1,9 +1,11 @@
 package erick.projects.socialnetwork.service;
 
 import erick.projects.socialnetwork.model.Follow;
+import erick.projects.socialnetwork.model.Like;
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.repository.FollowRepository;
+import erick.projects.socialnetwork.repository.LikeRepository;
 import erick.projects.socialnetwork.repository.PostRepository;
 import erick.projects.socialnetwork.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -14,19 +16,20 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
+    private final LikeRepository likeRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository, FollowRepository followRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, FollowRepository followRepository, LikeRepository likeRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.followRepository = followRepository;
+        this.likeRepository = likeRepository;
     }
 
     @Transactional
@@ -56,5 +59,9 @@ public class PostService {
 
     public Post getPostById(Long postId) {
         return postRepository.getPostById(postId);
+    }
+
+    public LikeRepository getLikeRepository() {
+        return likeRepository;
     }
 }

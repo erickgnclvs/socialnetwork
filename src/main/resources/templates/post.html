@@ -4,24 +4,26 @@
     <title>post page</title>
 </head>
 <body>
+<a th:text="${post.getUser().getUsername()}" th:href="@{/{username}(username=${post.getUser().getUsername()})}">user</a>
+<a th:href="@{/home}">home</a>
 <table>
     <tr>
         <td th:text="${post.getContent()}">content</td>
         <td th:text="${post.getUser().getUsername()}">username</td>
         <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
-        <td th:text="${post.getLikes().size()} + ' likes'">likes</td>
-        <!-- if post is liked by the current user -->
-        <td th:if="${}">
-            <form th:action="@{/unlike/{postId}(postId=${post.getId()})}" method="post">
-                <button type="submit">unlike</button>
-            </form>
-        </td>
-        <!-- if post is not liked by the current user -->
-        <td th:unless="${}">
-            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">
-                <button type="submit">like</button>
-            </form>
-        </td>
+<!--        <td th:text="${post.getLikes().size()} + ' likes'">likes</td>-->
+<!--         if post is liked by the current user -->
+<!--        <td>-->
+<!--            <form th:action="@{/unlike/{postId}(postId=${post.getId()})}" method="post">-->
+<!--                <button type="submit">unlike</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--         if post is not liked by the current user -->
+<!--        <td>-->
+<!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
+<!--                <button type="submit">like</button>-->
+<!--            </form>-->
+<!--        </td>-->
     </tr>
 </table>
 </body>

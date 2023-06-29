@@ -31,4 +31,8 @@ public class LikeService {
     public boolean isPostLikedByUser(Post post, User sessionUser) {
         return likeRepository.findByPostAndUser(post, sessionUser) != null;
     }
+
+    public Like getLikeByPostAndUser(Post post, User sessionUser) {
+        return likeRepository.findByPostAndUser(post, sessionUser);
+    }
 }

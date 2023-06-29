@@ -32,9 +32,9 @@ public class User {
     private List<Follow> following;
     @OneToMany(mappedBy = "followed")
     private List<Follow> followers;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Like> likes;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Like> likes;
     public User() {
     }
 

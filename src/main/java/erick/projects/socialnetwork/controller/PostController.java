@@ -1,5 +1,6 @@
 package erick.projects.socialnetwork.controller;
 
+import erick.projects.socialnetwork.model.Like;
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.LikeService;
