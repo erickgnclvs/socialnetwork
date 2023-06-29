@@ -10,6 +10,7 @@
 <a href="/create-post">create post</a>
 <a th:href="@{/{username}/followers(username=${sessionUser.getUsername()})}">followers</a>
 <a th:href="@{/{username}/following(username=${sessionUser.getUsername()})}">following</a>
+<a th:href="@{/users}">all users</a>
 
 <table th:each="post: ${feedPosts}">
     <tr>

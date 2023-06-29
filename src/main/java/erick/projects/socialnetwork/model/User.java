@@ -1,7 +1,7 @@
 package erick.projects.socialnetwork.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.util.List;
 
@@ -11,27 +11,38 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true, nullable = false, length = 20)
     private String username;
+
     @Column(unique = true, nullable = false)
+    @Email
     private String email;
+
     @Column(nullable = false)
     private String password;
+
     private String name;
+
     private String biography;
+
     @Column(nullable = false)
     private boolean isActive;
+
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
+
     @OneToMany(mappedBy = "follower")
     private List<Follow> following;
+
     @OneToMany(mappedBy = "followed")
     private List<Follow> followers;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Like> likes;
 

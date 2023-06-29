@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -120,6 +121,14 @@ public class UserController {
             // if user is not logged in, redirect to login page
             return "redirect:/login";
         }
+
+    }
+
+    @GetMapping("/users")
+    public String showAllUsers(Model model) {
+        List<User> allUsers = userService.findAll();
+        model.addAttribute("users", allUsers);
+        return "users";
     }
 
 }

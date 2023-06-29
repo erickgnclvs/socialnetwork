@@ -8,14 +8,18 @@ import java.util.List;
 @Entity
 @Table(name = "posts")
 public class Post {
+
     @Id
     @GeneratedValue
     private Long id;
+
     @Column(nullable = false, length = 280)
     private String content;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post")
