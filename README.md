@@ -1,4 +1,5 @@
-# Social Network App
+# Social Network App - in development
+
 
 This is a simple social network app built with Java, Spring, MySQL, JSP, and Bootstrap. It allows users to register, login, post text-based content, view a feed of posts from followed users, follow/unfollow other users, and like posts.
 
