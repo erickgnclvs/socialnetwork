@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>user profile</title>
+</head>
+<a th:href="@{/{username}/followers(username=${user.getUsername()})}">followers</a>
+<a th:href="@{/{username}/following(username=${user.getUsername()})}">following</a>
+<body>
+<h1 th:text="${user.getUsername()}">user</h1>
+<div th:if="${sessionUser.getUsername() != username}">
+    <div th:if="${isFollowing}">
+        <form th:action="@{/unfollow/{username}(username=${username})}" method="post">
+            <button type="submit">Unfollow</button>
+        </form>
+    </div>
+    <div th:unless="${isFollowing}">
+        <form th:action="@{/follow/{username}(username=${username})}" method="post">
+            <button type="submit">Follow</button>
+        </form>
+    </div>
+</div>
+<div th:if="${sessionUser.getUsername() == username}">
+    <form th:action="@{/{username}/edit(username=${username})}" method="get">
+        <button type="submit">Edit Profile</button>
+    </form>
+</div>
+<table th:each="post: ${user.getPosts()}">
+    <tr>
+        <td th:text="${post.getContent()}">content</td>
+        <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
+        <td>
+            <a th:href="@{/post/{postId}(postId=${post.getId()})}">view post</a>
+        </td>
+        <!--        <td>-->
+<!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
+<!--                <button type="submit">like/dislike</button>-->
+<!--            </form>-->
+<!--        </td>-->
+    </tr>
+
+</table>
+</body>
+</html>

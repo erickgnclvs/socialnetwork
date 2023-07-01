@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>homepage</h1>
+<h1 th:text="'logged in as ' + ${sessionUser.getUsername()}"></h1>
+<a href="/logout">logout</a>
+<a href="/create-post">create post</a>
+<a th:href="@{/{username}/followers(username=${sessionUser.getUsername()})}">followers</a>
+<a th:href="@{/{username}/following(username=${sessionUser.getUsername()})}">following</a>
+<a th:href="@{/users}">all users</a>
+
+<table th:each="post: ${feedPosts}">
+    <tr>
+        <td th:text="${post.getContent()}">content</td>
+        <td th:text="${post.getUser().getUsername()}">username</td>
+        <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
+        <td>
+            <a th:href="@{/post/{postId}(postId=${post.getId()})}">view post</a>
+        </td>
+<!--        <td>-->
+<!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
+<!--                <button type="submit">like/dislike</button>-->
+<!--            </form>-->
+<!--        </td>-->
+    </tr>
+</table>
+</body>
+</html>

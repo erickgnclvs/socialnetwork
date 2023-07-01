@@ -2,10 +2,10 @@ package erick.projects.socialnetwork.controller;
 
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
+import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.PostService;
 import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +40,7 @@ public class HomeController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             model.addAttribute("formatter", formatter);
             model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("user", user);
             model.addAttribute("feedPosts", feedPosts);
             return "home";
         } else {

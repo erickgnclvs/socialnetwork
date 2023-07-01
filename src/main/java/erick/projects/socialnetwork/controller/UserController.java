@@ -40,14 +40,23 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(Model model) {
-        model.addAttribute("user", new User());
-        return "login";
+    public String showLoginForm(Model model, HttpSession session) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            return "redirect:/home";
+        } else {
+            model.addAttribute("user", new User());
+            return "login";
+        }
     }
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
-        // authenticate user
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            System.out.println("user is not null");
+            return "redirect:/home";
+        }
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
             // if authentication is successful, redirect to home page
@@ -61,12 +70,19 @@ public class UserController {
         }
     }
 
+
     @GetMapping("/logout")
     public String logoutUser(HttpSession session) {
         // invalidate session
-        session.invalidate();
-        // redirect to login page
+        // check if user is logged in
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            session.invalidate();
+            // redirect to login page
+        }
         return "redirect:/login";
+        // if user is logged in...
+
     }
 
     @GetMapping("/{username}")
@@ -99,9 +115,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String showAllUsers(Model model) {
-        List<User> allUsers = userService.findAll();
-        model.addAttribute("users", allUsers);
-        return "users";
+    public String showAllUsers(Model model, HttpSession session) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            List<User> allUsers = userService.findAll();
+            model.addAttribute("users", allUsers);
+            return "users";
+        }
+        return "redirect:/login";
+
     }
 }

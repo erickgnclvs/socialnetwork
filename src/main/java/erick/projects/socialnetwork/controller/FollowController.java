@@ -30,6 +30,7 @@ public class FollowController {
 
     @PostMapping("/follow/{username}")
     public String followUser(@PathVariable("username") String username, HttpSession session) {
+        System.out.println("chegou na linha 33");
         User tmp = (User) session.getAttribute("user");
         User follower = userService.findByUsername(tmp.getUsername());
         User followed = userService.findByUsername(username);

@@ -1,0 +1,73 @@
+<!-- Head-->
+<!DOCTYPE html>
+<div th:fragment="head">
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Social Network</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <!--        <script th:inline="javascript" th:src="@{main.js}"></script>-->
+    </head>
+    <body>
+</div>
+
+
+<!-- Navigation bar -->
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" xmlns:th="http://www.w3.org/1999/xhtml">
+        <a class="navbar-brand" th:href="@{/}">Social Network</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a th:href="@{/home}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<!-- User information -->
+<div th:fragment="userinfo" class="card">
+    <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture" class="card-img-top">
+    <div class="card-body">
+        <h5 th:text="${user.getUsername()}" class="card-title">Username</h5>
+        <p th:text="${user.getBiography()}" class="card-text">this is a biography</p>
+        <div class="followers">
+            <a th:href="@{/{username}/followers(username=${user.getUsername()})}" class="card-link">Followers</a>
+            <span th:text="${user.getFollowers().size()}" class="count">1000</span>
+        </div>
+        <div class="following">
+            <a th:href="@{/{username}/following(username=${user.getUsername()})}" class="card-link">Following</a>
+            <span th:text="${user.getFollowing().size()}" class="count">500</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- Make a new post form -->
+<div th:fragment="newpost" class="card mt-3">
+    <div class="card-body">
+        <form method="POST" action="/create-post" th:object="${post}">
+            <div class="form-group">
+                <textarea name="content" field="*{content}" class="form-control" rows="3"
+                          placeholder="What's on your mind?"></textarea>
+            </div>
+            <button onclick="submitPostForm(event, this.form)" type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
+</div>
+</html>

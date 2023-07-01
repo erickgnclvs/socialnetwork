@@ -1,31 +1,52 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>homepage</h1>
-<h1 th:text="'logged in as ' + ${sessionUser.getUsername()}"></h1>
-<a href="/logout">logout</a>
-<a href="/create-post">create post</a>
-<a th:href="@{/{username}/followers(username=${sessionUser.getUsername()})}">followers</a>
-<a th:href="@{/{username}/following(username=${sessionUser.getUsername()})}">following</a>
-<a th:href="@{/users}">all users</a>
+<!-- Head-->
+<head th:replace="~{layout :: head}">...</head>
 
-<table th:each="post: ${feedPosts}">
-    <tr>
-        <td th:text="${post.getContent()}">content</td>
-        <td th:text="${post.getUser().getUsername()}">username</td>
-        <td th:with="formatter=${formatter}" th:text="${post.getCreatedAt().format(formatter)}">created at</td>
-        <td>
-            <a th:href="@{/post/{postId}(postId=${post.getId()})}">view post</a>
-        </td>
-<!--        <td>-->
-<!--            <form th:action="@{/like/{postId}(postId=${post.getId()})}" method="post">-->
-<!--                <button type="submit">like/dislike</button>-->
-<!--            </form>-->
-<!--        </td>-->
-    </tr>
-</table>
-</body>
-</html>
+<!-- Navbar -->
+<div th:replace="~{layout :: navbar}"></div>
+
+<!-- Bootstrap layout -->
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-3">
+
+      <!-- User information -->
+      <div th:replace="~{layout :: userinfo}"></div>
+
+      <!-- Bootstrap layout -->
+    </div>
+    <div class="col-md-9">
+
+      <!-- Make a new post form -->
+      <div th:replace="~{layout :: newpost}"></div>
+
+      <!-- For each post in posts -->
+      <div th:each="post : ${feedPosts}" class="post card mt-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-auto pr-0">
+              <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture" width="50"
+                   class="profile-img">
+            </div>
+            <div class="col">
+              <div class="post-content">
+                <!--                <form th:object="${like}" class="likes" name="like-form"-->
+                <!--                      th:action="@{/like/{postId}(postId=${post.getId()})}" th:method="post">-->
+                <!--                  <input type="hidden" name="post_id" th:value="${post.getId()}" field="*{id}">-->
+                <!--                  <button onclick="submitLikeForm(event, this.form)" type="submit"-->
+                <!--                          class="btn btn-outline-primary like-button">Like-->
+                <!--                  </button>-->
+                <!--                  <span class="like-count" th:id="'like-count-' + ${post.getId()}"-->
+                <!--                  th:text="${post.getLikes().size()}"100</span>-->
+                <!--                </form>-->
+                <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}" th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
+                <p th:text="${post.getContent()}" class="card-text">This is a post</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Repeat this block for each tweet -->
+
+      </div>
+    </div>
+  </div>
+  </body>
