@@ -1,20 +1,39 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>all users</title>
-</head>
-<body>
-<h1>all users</h1>
-<a th:href="@{/home}">home</a>
-<table th:each="user: ${users}">
-    <tr>
-        <td th:text="${user.getUsername()}">username</td>
-        <td>
-            <a th:href="@{/{username}(username=${user.getUsername()})}">
-                <button type="submit">view profile</button>
-            </a>
-        </td>
-    </tr>
-</table>
+<!-- Head-->
+<head th:replace="~{layout :: head}">...</head>
+
+<!-- Navbar -->
+<div th:replace="~{layout :: navbar}"></div>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center">Social Network</h1>
+            <h2 class="text-center mt-3">Users</h2>
+            <div class="list-group mt-3">
+                <!-- For each user in users -->
+                <div th:each="user: ${users}">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto pr-0">
+                                <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture"
+                                     width="50"
+                                     class="profile-img">
+                            </div>
+                            <div class="col">
+                                <div class="post-content">
+                                    <h5 th:href="@{/{username}(username=${user.getUsername()})}" th:text="${user.getUsername()}" class="card-title">Username</h5>
+                                </div>
+                                <a th:href="@{/{username}(username=${user.getUsername()})}">
+                                    <button class="btn btn-primary" type="submit">View Profile</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End for each user in users -->
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

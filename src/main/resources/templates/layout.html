@@ -30,6 +30,9 @@
                     <a th:href="@{/home}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" th:href="@{/{username}(username=${sessionUser.getUsername()})}">Profile</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" th:href="@{/users}">Users</a>
                 </li>
                 <li class="nav-item">

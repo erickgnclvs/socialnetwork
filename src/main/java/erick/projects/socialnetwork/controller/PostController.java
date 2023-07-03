@@ -69,15 +69,17 @@ public class PostController {
     @GetMapping("post/{postId}")
     public String showPostById(@PathVariable("postId") Long postId, Model model, HttpSession session) {
         // check if user is logged in
-        User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser != null) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
             // if user is logged in, add any necessary data to the model
             // ...
+            User sessionUser = userService.findByUsername(tmp.getUsername());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             Post post = postService.getPostById(postId);
             model.addAttribute("formatter", formatter);
             model.addAttribute("post", post);
-            model.addAttribute("user", sessionUser);
+            model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("user", post.getUser());
             return "post";
         } else {
             // if user is not logged in, redirect to login page

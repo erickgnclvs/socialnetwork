@@ -29,17 +29,11 @@
             </div>
             <div class="col">
               <div class="post-content">
-                <!--                <form th:object="${like}" class="likes" name="like-form"-->
-                <!--                      th:action="@{/like/{postId}(postId=${post.getId()})}" th:method="post">-->
-                <!--                  <input type="hidden" name="post_id" th:value="${post.getId()}" field="*{id}">-->
-                <!--                  <button onclick="submitLikeForm(event, this.form)" type="submit"-->
-                <!--                          class="btn btn-outline-primary like-button">Like-->
-                <!--                  </button>-->
-                <!--                  <span class="like-count" th:id="'like-count-' + ${post.getId()}"-->
-                <!--                  th:text="${post.getLikes().size()}"100</span>-->
-                <!--                </form>-->
                 <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}" th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
                 <p th:text="${post.getContent()}" class="card-text">This is a post</p>
+                <a th:href="@{/post/{postId}(postId=${post.getId()})}" >
+                  <button class="btn btn-primary" type="submit">View post</button>
+                </a>
               </div>
             </div>
           </div>

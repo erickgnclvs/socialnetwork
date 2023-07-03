@@ -1,5 +1,6 @@
 package erick.projects.socialnetwork.controller;
 
+import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -100,6 +102,9 @@ public class UserController {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
                 model.addAttribute("formatter", formatter);
                 model.addAttribute("user", user);
+                List<Post> posts = user.getPosts();
+                posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
+                model.addAttribute("posts", posts);
                 // check if session user is following accessed user
                 boolean isFollowing = followService.isFollowing(sessionUser, user);
                 model.addAttribute("isFollowing", isFollowing);
@@ -119,6 +124,7 @@ public class UserController {
         User tmp = (User) session.getAttribute("user");
         if (tmp != null) {
             List<User> allUsers = userService.findAll();
+            model.addAttribute("sessionUser", tmp);
             model.addAttribute("users", allUsers);
             return "users";
         }

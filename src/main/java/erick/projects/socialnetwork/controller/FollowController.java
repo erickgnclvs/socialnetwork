@@ -54,7 +54,7 @@ public class FollowController {
             // if user is logged in, add any necessary data to the model
             // ...
             User user = userService.findByUsername(username);
-            model.addAttribute("user", user);
+            model.addAttribute("sessionUser", user);
             model.addAttribute("followers", user.getFollowers());
             return "followers";
         } else {
@@ -70,7 +70,7 @@ public class FollowController {
             // if user is logged in, add any necessary data to the model
             // ...
             User user = userService.findByUsername(username);
-            model.addAttribute("user", user);
+            model.addAttribute("sessionUser", user);
             model.addAttribute("following", user.getFollowing());
             return "following";
         } else {
