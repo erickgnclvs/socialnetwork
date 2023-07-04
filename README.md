@@ -1,77 +1,90 @@
-# Social Network App - in development
+# Social Network App
 
+Welcome to the Social Network App repository! This project was created as a way to put into practice my knowledge of Java for web development. Whether you're a developer, contributor, or user, this file will provide you with all the necessary information to get started.
 
-This is a simple social network app built with Java, Spring, MySQL, JSP, and Bootstrap. It allows users to register, login, post text-based content, view a feed of posts from followed users, follow/unfollow other users, and like posts.
+## Table of Contents
 
-## Organization files
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Support](#support)
+- [License](#license)
 
-All the files related to organization are in the directory ``organization``
+## Project Overview
 
+Social Network App is a simple yet powerful application designed to connect people and facilitate communication. It leverages Java, Spring Boot, MySQL, Thymeleaf and Bootstrap to provide users with a platform to share their thoughts and ideas with others. My aim is to create a welcoming and inclusive community where users can interact and engage with each other.
 
-## Getting Started
+## Features
 
-To get started with this project, follow these steps:
+- **User registration and login:** Users can create an account and log in to access the app's features.
+- **Posting text-based content:** Users can create posts to share their thoughts and ideas with others.
+- **Viewing a feed of posts:** Users can view a feed of posts from users they follow.
+- **Following/unfollowing other users:** Users can follow or unfollow other users to customize their feed.
+- **Liking posts:** Users can like posts to show their appreciation for the content.
 
-1. Install IntelliJ Ultimate and MySQL on your computer.
-2. Clone this repository and open it in IntelliJ.
-3. Create a new MySQL database for the app.
-4. Update the `application.properties` file with your database connection information.
-5. Run the app using the `./mvnw spring-boot:run` command.
+## Installation
 
-## Sprints
+To set up the project on your local machine, please follow these steps:
 
-The development of this app was divided into several sprints. Each sprint focused on implementing a specific set of features.
+1. Clone this repository to your local machine.
 
-### Sprint 1: Project setup and user registration
+```bash
+git clone https://github.com/erickgnclvs/socialnetwork.git
+```
 
-In this sprint, we set up the development environment and implemented user registration.
+2. Install MySQL on your computer.
+3. Open the cloned repository in your preferred IDE or text editor.
+4. Create a new MySQL database for the app.
+5. Update the `application.properties` file with your database connection information.
+6. Run the app using the `./mvnw spring-boot:run` command.
 
-- Set up IntelliJ Ultimate and MySQL
-- Created a new Spring Boot project with the following dependencies: Spring Web, Spring Data JPA, MySQL Driver, Thymeleaf
-- Configured the database connection in the `application.properties` file
-- Implemented user registration using a `User` model class, a `UserRepository` interface, a `UserService` class, and a `UserController` class
-- Created a registration form in JSP and handled form submission in the `UserController`
+Congratulations! The project is now installed and running on your local machine.
 
-### Sprint 2: User login and security
+## Usage
 
-In this sprint, we implemented user login and added security to the app.
+Here are some instructions on how to use the Social Network App:
 
-- Created a login form in JSP and handled form submission in the `UserController`
-- Authenticated users using Spring Security's `AuthenticationManager`
-- Added the Spring Security dependency to the project
-- Configured Spring Security in a `SecurityConfig` class to restrict access to certain pages or APIs
-- Implemented the `UserDetailsService` interface in the `UserService` class to load users by their username
+1. Access the app through the provided URL or by visiting http://localhost:8080 in your web browser.
+2. Create an account by clicking on the "Register" button and filling out the registration form.
+3. Log in to your account by clicking on the "Login" button and entering your credentials.
+4. Explore the different sections of the app, such as creating posts, viewing your feed, following/unfollowing other users, and liking posts.
 
-### Sprint 3: Posting and viewing content
+For more detailed instructions, please refer to our User Guide.
 
-In this sprint, we implemented posting text-based content and viewing a feed of posts from followed users.
+## Contributing
 
-- Implemented posting text-based content using a `Post` model class, a `PostRepository` interface, a `PostService` class, and a `PostController` class
-- Created a form for creating posts in JSP and handled form submission in the `PostController`
-- Implemented viewing a feed of posts from followed users by retrieving posts from the database using the `PostService` and displaying them in the frontend using JSP and Bootstrap components
+We appreciate contributions from the community to enhance our project. To contribute, please follow these guidelines:
 
-### Sprint 4: Following and unfollowing users
+1. Fork this repository to your GitHub account.
+2. Create a new branch for your feature or bug fix:
 
-In this sprint, we implemented following/unfollowing other users.
+```bash
+git checkout -b feature/your-feature
+```
 
-- Implemented following/unfollowing other users using a `Follow` model class, a `FollowRepository` interface, a `FollowService` class, and a `FollowController` class
-- Added buttons for following/unfollowing users in JSP pages and handled button clicks in the `FollowController`
-- Used the `FollowService` to create or delete `Follow` objects when a user follows or unfollows another user
+3. Make your changes and ensure they are properly tested.
+4. Commit your changes with descriptive commit messages:
 
-### Sprint 5: Implementing likes
+```bash
+git commit -m "Add your commit message here"
+```
 
-In this sprint, we implemented liking posts.
+5. Push your branch to your forked repository:
 
-- Implemented liking posts using a `Like` model class, a `LikeRepository` interface, a `LikeService` class, and a `LikeController` class
-- Added buttons for liking/unliking posts in JSP pages and handled button clicks in the `LikeController`
-- Used the `LikeService` to create or delete `Like` objects when a user likes or unlikes a post
+```bash
+git push origin feature/your-feature
+```
 
-## Next Steps
+6. Open a pull request in this repository, describing the changes you made and why they should be merged.
 
-There are many additional features and improvements that could be made to this app. Some ideas for next steps include:
+Thank you for contributing to our project!
 
-- Improving the user interface by customizing Bootstrap components and adding CSS styles
-- Adding more functionality such as commenting on posts or sending private messages between users
-- Improving security by adding features such as password hashing or CSRF protection
-- Testing and debugging the app to ensure it's working correctly
-- Deploying the app to a server so that other people can use it
+## Support
+
+If you encounter any issues or have any questions or suggestions regarding our project, please feel free to reach out. You can contact me through [my e-mail](mailto:erickgoncalves5@hotmail.com) or by opening an issue in this repository.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
