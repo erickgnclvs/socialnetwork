@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Social Network - Registration</title>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
+<!-- Head-->
+<head th:replace="~{layout :: head}">...</head>
+
 <body>
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -30,14 +21,14 @@
                             <label for="password">Password</label>
                             <input type="password" th:field="*{password}" id="password" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <div class="form-group d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary mr-2">Register</button>
+                            <a href="/login" class="btn btn-primary">Login</a>
+                        </div>
                     </form>
-                    <a href="/login" class="btn btn-primary mt-3">Login</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </body>
-</html>
-
