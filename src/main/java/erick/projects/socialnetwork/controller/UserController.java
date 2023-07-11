@@ -131,4 +131,17 @@ public class UserController {
         return "redirect:/login";
 
     }
+
+    @GetMapping("/profile/edit")
+    public String showEditProfile(Model model, HttpSession session) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            User sessionUser = userService.findByUsername(tmp.getUsername());
+            User user = userService.findByUsername(tmp.getUsername());
+            model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("user", user);
+            return "edit_profile";
+        }
+        return "redirect:/login";
+    }
 }

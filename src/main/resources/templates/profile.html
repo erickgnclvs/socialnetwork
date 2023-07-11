@@ -12,25 +12,16 @@
             <!-- User information -->
             <div th:replace="~{layout :: userinfo}"></div>
 
-            <!-- Bootstrap layout -->
-        </div>
-        <div class="col-md-9">
-
-            <!-- Make a new post form -->
-            <div th:if="${sessionUser.getUsername() == username}">
-                <div th:replace="~{layout :: newpost}"></div>
-            </div>
-
             <!-- Follow / Unfollow button -->
             <div th:if="${sessionUser.getUsername() != username}">
                 <div th:if="${isFollowing}">
                     <form th:action="@{/unfollow/{username}(username=${username})}" method="post">
-                        <input class="btn btn-primary" type="submit" value="Unfollow"/>
+                        <input class="btn btn-primary m-3" type="submit" value="Unfollow"/>
                     </form>
                 </div>
                 <div th:if="${!isFollowing}">
                     <form th:action="@{/follow/{username}(username=${username})}" method="post">
-                        <input class="btn btn-primary" type="submit" value="Follow"/>
+                        <input class="btn btn-primary m-3" type="submit" value="Follow"/>
                     </form>
                 </div>
             </div>
@@ -38,8 +29,16 @@
             <!-- Edit profile button -->
             <div th:if="${sessionUser.getUsername() == username}">
                 <a th:href="@{/profile/edit}">
-                    <button class="btn btn-primary" type="submit" value="Edit profile">Edit profile</button>
+                    <button class="btn btn-primary m-3" type="submit" value="Edit profile">Edit profile</button>
                 </a>
+            </div>
+
+        </div>
+        <div class="col-md-9">
+
+            <!-- Make a new post form -->
+            <div th:if="${sessionUser.getUsername() == username}">
+                <div th:replace="~{layout :: newpost}"></div>
             </div>
 
             <!-- For each post in posts -->
