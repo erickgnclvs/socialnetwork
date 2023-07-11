@@ -1,18 +1,19 @@
 package erick.projects.socialnetwork.controller;
 
+import erick.projects.socialnetwork.model.Image;
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
+import erick.projects.socialnetwork.repository.ImageRepository;
 import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -21,11 +22,13 @@ import java.util.List;
 public class UserController {
     private final FollowService followService;
     private final UserService userService;
+    private final ImageRepository imageRepository;
 
     @Autowired
-    public UserController(FollowService followService, UserService userService) {
+    public UserController(FollowService followService, UserService userService, ImageRepository imageRepository) {
         this.followService = followService;
         this.userService = userService;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/register")
@@ -143,5 +146,53 @@ public class UserController {
             return "edit_profile";
         }
         return "redirect:/login";
+    }
+
+    @PostMapping("/profile/edit")
+    public String editProfile(@RequestParam("name") String name,
+                              @RequestParam("username") String username,
+                              @RequestParam("email") String email,
+                              @RequestParam("biography") String biography,
+                              @RequestParam("profilePicture") MultipartFile profilePicture,
+                              HttpSession session) {
+        // Retrieve the current user from the session
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
+            User user = userService.findByUsername(tmp.getUsername());
+
+            // Update the user's fields with the values from the form
+            user.setName(name);
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setBiography(biography);
+
+            // Check if the user uploaded a new profile picture
+            if (!profilePicture.isEmpty()) {
+                try {
+                    // Create a new Image object
+                    Image img = new Image();
+                    img.setImageName(profilePicture.getOriginalFilename());
+                    img.setImageType(profilePicture.getContentType());
+                    img.setImage(profilePicture.getBytes());
+
+                    // Save the image to the database
+                    imageRepository.save(img);
+
+                    // Set the user's profile picture to the uploaded image
+                    user.setProfileImage(img);
+                } catch (IOException e) {
+                    // Handle any errors
+                    e.printStackTrace();
+                }
+            }
+
+            // Update the user in the database
+            userService.save(user);
+
+            // Redirect to the user's profile page
+            return "redirect:/home";
+        } else {
+            return "redirect:/login";
+        }
     }
 }

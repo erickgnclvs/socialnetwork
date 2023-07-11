@@ -34,6 +34,10 @@ public class User {
     @Column(nullable = false)
     private boolean isActive;
 
+    @OneToOne
+    @JoinColumn(name = "profile_image_id")
+    private Image profileImage;
+
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
@@ -139,5 +143,9 @@ public class User {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public void setProfileImage(Image profileImage) {
+        this.profileImage = profileImage;
     }
 }
