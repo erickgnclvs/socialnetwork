@@ -145,6 +145,10 @@ public class User {
         isActive = active;
     }
 
+    public Image getProfileImage() {
+        return profileImage;
+    }
+
     public void setProfileImage(Image profileImage) {
         this.profileImage = profileImage;
     }
