@@ -15,30 +15,26 @@
             <!-- Bootstrap layout -->
         </div>
         <div class="col-md-9">
-
-
+            <div class="card mb-3">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-auto pr-0">
                             <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture" width="50"
                                  class="profile-img">
                         </div>
-                        <div class="col">
-                            <div class="post-content">
-                                <h5 th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
-                                <p th:text="${post.getContent()}" class="card-text">This is a post</p>
+                        <div class="col d-flex align-items-center">
+                            <div>
+                                <h5 th:text="${post.getUser().getUsername()}" class="card-title mb-0">Username</h5>
+                                <p th:text="${post.getContent()}" class="card-text mt-2">This is a post</p>
                                 <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">
-                                    <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}" >
-                                        <button class="btn btn-primary" type="submit">Delete post</button>
+                                    <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}">
+                                        <button class="btn btn-primary btn-sm" type="submit">Delete post</button>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Repeat this block for each tweet -->
-
             </div>
         </div>
     </div>
