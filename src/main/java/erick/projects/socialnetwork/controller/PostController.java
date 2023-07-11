@@ -1,6 +1,5 @@
 package erick.projects.socialnetwork.controller;
 
-import erick.projects.socialnetwork.model.Like;
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.LikeService;
@@ -17,12 +16,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Controller for handling HTTP requests related to creating, deleting, and viewing posts.
+ */
 @Controller
 public class PostController {
     private final PostService postService;
     private final UserService userService;
     private final LikeService likeService;
 
+    /**
+     * Constructor for PostController.
+     *
+     * @param postService the service for accessing posts in the database
+     * @param userService the service for accessing users in the database
+     * @param likeService the service for managing likes on posts
+     */
     @Autowired
     public PostController(PostService postService, UserService userService, LikeService likeService) {
         this.postService = postService;
@@ -30,16 +39,26 @@ public class PostController {
         this.likeService = likeService;
     }
 
-    public PostService getPostService() {
-        return postService;
-    }
-
+    /**
+     * Saves a new post to the database and redirects the user to the home page.
+     *
+     * @param post    the new post to save
+     * @param session the HTTP session
+     * @return a redirect to /home
+     */
     @PostMapping("/create-post")
     public String createPost(@ModelAttribute("post") Post post, HttpSession session) {
         postService.createPost(post, session);
         return "redirect:/home";
     }
 
+    /**
+     * Deletes a post from the database if it belongs to the current user.
+     *
+     * @param postId  the ID of the post to delete
+     * @param session the HTTP session
+     * @return either "redirect:/home" or "redirect:/error" depending on whether or not the current user is allowed to delete this post
+     */
     @PostMapping("/post/{postId}/delete")
     public String deletePost(@PathVariable("postId") Long postId, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -52,13 +71,20 @@ public class PostController {
         }
     }
 
+    /**
+     * Displays a single post by its ID.
+     *
+     * @param postId  the ID of the post to display
+     * @param model   the model for passing data to the view
+     * @param session the HTTP session
+     * @return either "post" or "redirect:/login" depending on whether or not there is a logged-in user
+     */
     @GetMapping("post/{postId}")
     public String showPostById(@PathVariable("postId") Long postId, Model model, HttpSession session) {
-        // check if user is logged in
+        // Check if user is logged in
         User tmp = (User) session.getAttribute("user");
         if (tmp != null) {
-            // if user is logged in, add any necessary data to the model
-            // ...
+            // If user is logged in, proceed
             User sessionUser = userService.findByUsername(tmp.getUsername());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             Post post = postService.getPostById(postId);
@@ -68,7 +94,7 @@ public class PostController {
             model.addAttribute("user", post.getUser());
             return "post";
         } else {
-            // if user is not logged in, redirect to login page
+            // If user is not logged in, redirect to login page
             return "redirect:/login";
         }
     }

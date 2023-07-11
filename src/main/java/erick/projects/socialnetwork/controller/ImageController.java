@@ -19,27 +19,28 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+/**
+ * Controller for handling HTTP requests related to images.
+ */
 @Controller
 public class ImageController {
     private final ImageRepository imageRepository;
 
+    /**
+     * Constructor for ImageController.
+     *
+     * @param imageRepository the repository for accessing images in the database
+     */
     public ImageController(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 
-//    @GetMapping("/images/{imageId}")
-//    public ResponseEntity<byte[]> getImage(@PathVariable Long imageId) {
-//        // Find the image in the database
-//        Image img = imageRepository.findById(imageId).orElseThrow();
-//        // Set the response headers
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.parseMediaType(img.getImageType()));
-//        headers.setContentLength(img.getImage().length);
-//
-//        // Return the image as a byte array
-//        return new ResponseEntity<>(img.getImage(), headers, HttpStatus.OK);
-//    }
-
+    /**
+     * Retrieves an image from the database, crops it to a square, and returns it as a byte array in the response body.
+     *
+     * @param imageId the ID of the image to retrieve
+     * @return the cropped image as a byte array
+     */
     @GetMapping("/images/{imageId}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long imageId) {
         // Find the image in the database
@@ -83,9 +84,11 @@ public class ImageController {
         }
     }
 
-
-
-
+    /**
+     * Returns a default profile picture as a byte array in the response body.
+     *
+     * @return the default profile picture as a byte array
+     */
     @GetMapping("/images/default")
     public ResponseEntity<byte[]> getDefaultImage() {
         // Load the default image from the classpath
@@ -104,6 +107,4 @@ public class ImageController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 }

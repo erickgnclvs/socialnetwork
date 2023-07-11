@@ -2,7 +2,6 @@ package erick.projects.socialnetwork.controller;
 
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
-import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.PostService;
 import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -13,28 +12,48 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Controller for handling HTTP requests related to the home page.
+ */
 @Controller
 public class HomeController {
     private final UserService userService;
     private final PostService postService;
 
+    /**
+     * Constructor for HomeController.
+     *
+     * @param userService the service for accessing users in the database
+     * @param postService the service for accessing posts in the database
+     */
     public HomeController(UserService userService, PostService postService) {
         this.userService = userService;
         this.postService = postService;
     }
 
+    /**
+     * Redirects the user to the home page.
+     *
+     * @return a redirect to /home
+     */
     @GetMapping("/")
     public String redirectHomePage() {
         return "redirect:/home";
     }
 
+    /**
+     * Displays the home page with a feed of posts from users that the current user is following.
+     *
+     * @param model   the model for passing data to the view
+     * @param session the HTTP session
+     * @return either "home" or "redirect:/login" depending on whether or not there is a logged-in user
+     */
     @GetMapping("/home")
     public String showHomePage(Model model, HttpSession session) {
-        // check if user is logged in
+        // Check if user is logged in
         User sessionUser = (User) session.getAttribute("user");
         if (sessionUser != null) {
-            // if user is logged in, add any necessary data to the model
-            // ...
+            // If user is logged in proceed
             User user = userService.findByUsername(sessionUser.getUsername());
             List<Post> feedPosts = postService.getFeedPosts(user);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
@@ -44,9 +63,8 @@ public class HomeController {
             model.addAttribute("feedPosts", feedPosts);
             return "home";
         } else {
-            // if user is not logged in, redirect to login page
+            // If user is not logged in, redirect to login page
             return "redirect:/login";
         }
     }
-
 }
