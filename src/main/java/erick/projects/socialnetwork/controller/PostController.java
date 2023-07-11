@@ -76,4 +76,8 @@ public class PostController {
     public UserService getUserService() {
         return userService;
     }
+
+    public LikeService getLikeService() {
+        return likeService;
+    }
 }
