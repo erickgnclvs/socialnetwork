@@ -34,20 +34,6 @@ public class PostController {
         return postService;
     }
 
-    @GetMapping("/create-post")
-    public String showCreatePostForm(Model model, HttpSession session) {
-        // check if user is logged in
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            // if user is logged in, add any necessary data to the model
-            model.addAttribute("post", new Post());
-            return "create_post";
-        } else {
-            // if user is not logged in, redirect to login page
-            return "redirect:/login";
-        }
-    }
-
     @PostMapping("/create-post")
     public String createPost(@ModelAttribute("post") Post post, HttpSession session) {
         postService.createPost(post, session);
