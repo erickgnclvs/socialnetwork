@@ -87,4 +87,4 @@ If you encounter any issues or have any questions or suggestions regarding our p
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.md).
