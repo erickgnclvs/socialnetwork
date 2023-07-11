@@ -24,9 +24,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto pr-0">
-                                        <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture"
-                                             width="50"
-                                             class="profile-img">
+                                        <img th:if="${follower.getFollower().getProfileImage() != null}" th:src="@{'/images/' + ${follower.getFollower().getProfileImage().getId()}}" width="50" alt="Profile Picture"/>
+                                        <img th:unless="${follower.getFollower().getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
+
                                     </div>
                                     <div class="col d-flex align-items-center">
                                         <div>

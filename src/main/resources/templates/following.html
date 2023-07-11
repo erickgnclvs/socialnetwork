@@ -1,58 +1,3 @@
-<!--&lt;!&ndash; Head&ndash;&gt;-->
-<!--<head th:replace="~{layout :: head}">...</head>-->
-
-<!--&lt;!&ndash; Navbar &ndash;&gt;-->
-<!--<div th:replace="~{layout :: navbar}"></div>-->
-
-<!--<div class="container mt-3">-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-md-6">-->
-<!--            <h2 class="text-center mt-3">Following</h2>-->
-<!--            <div class="list-group mt-3">-->
-<!--                <div th:if="${following.isEmpty()}">-->
-<!--                    <div class="card-body">-->
-<!--                        <div class="row">-->
-<!--                            <div class="col-auto pr-0"></div>-->
-<!--                            <div class="col">-->
-<!--                                <div class="post-content">-->
-<!--                                    <h5 class="card-title">You don't follow anyone</h5>-->
-<!--                                </div>-->
-<!--                                <a th:href="@{/users}">-->
-<!--                                    <button class="btn btn-primary" type="submit">View All Users</button>-->
-<!--                                </a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div th:if="${!following.isEmpty()}">-->
-<!--                    <div th:each="follow: ${following}">-->
-<!--                        <div class="card-body">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-auto pr-0">-->
-<!--                                    <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture"-->
-<!--                                         width="50"-->
-<!--                                         class="profile-img">-->
-<!--                                </div>-->
-<!--                                <div class="col">-->
-<!--                                    <div class="post-content">-->
-<!--                                        <h5 th:text="${follow.getFollowed().getUsername()}" class="card-title">Username</h5>-->
-<!--                                    </div>-->
-<!--                                    <a th:href="@{/{username}(username=${follow.getFollowed().getUsername()})}">-->
-<!--                                        <button class="btn btn-primary" type="submit">View Profile</button>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
-
-
 <!-- Head-->
 <head th:replace="~{layout :: head}">...</head>
 
@@ -79,9 +24,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto pr-0">
-                                        <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture"
-                                             width="50"
-                                             class="profile-img">
+                                        <img th:if="${follow.getFollowed().getProfileImage() != null}" th:src="@{'/images/' + ${follow.getFollowed().getProfileImage().getId()}}" width="50" alt="Profile Picture"/>
+                                        <img th:unless="${follow.getFollowed().getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
+
                                     </div>
                                     <div class="col d-flex align-items-center">
                                         <div>

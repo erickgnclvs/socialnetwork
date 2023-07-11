@@ -45,9 +45,8 @@
 
 <!-- User information -->
 <div th:fragment="userinfo" class="card">
-<!--    <img src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" alt="Profile Picture" class="card-img-top">-->
     <img th:if="${user.getProfileImage() != null}" th:src="@{'/images/' + ${user.getProfileImage().getId()}}" alt="Profile Picture"/>
-    <img th:unless="${user.getProfileImage() != null}" th:src="@{/images/default-profile-picture.png}" alt="Default Profile Picture"/>
+    <img th:unless="${user.getProfileImage() != null}" th:src="@{/images/default}" alt="Default Profile Picture"/>
 
     <div class="card-body">
         <h5 th:text="${user.getUsername()}" class="card-title">Username</h5>
