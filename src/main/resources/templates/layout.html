@@ -30,22 +30,26 @@
                     <a th:href="@{/home}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/{username}(username=${sessionUser.getUsername()})}">Profile</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" th:href="@{/users}">Users</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/{username}(username=${sessionUser.getUsername()})}">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>
+
     </nav>
 </div>
 
 <!-- User information -->
 <div th:fragment="userinfo" class="card">
-    <img th:if="${user.getProfileImage() != null}" th:src="@{'/images/' + ${user.getProfileImage().getId()}}" alt="Profile Picture"/>
+    <img th:if="${user.getProfileImage() != null}" th:src="@{'/images/' + ${user.getProfileImage().getId()}}"
+         alt="Profile Picture"/>
     <img th:unless="${user.getProfileImage() != null}" th:src="@{/images/default}" alt="Default Profile Picture"/>
 
     <div class="card-body">
