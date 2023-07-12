@@ -38,6 +38,10 @@ public class Post {
     public Post() {
     }
 
+    public boolean isLikedBy(User user) {
+        return likes.stream().anyMatch(like -> like.getUser().equals(user));
+    }
+
     public Long getId() {
         return id;
     }

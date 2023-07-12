@@ -25,27 +25,39 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-auto pr-0">
-                            <img th:if="${post.getUser().getProfileImage() != null}" th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50" alt="Profile Picture"/>
-                            <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
+                            <img th:if="${post.getUser().getProfileImage() != null}"
+                                 th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50"
+                                 alt="Profile Picture"/>
+                            <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}"
+                                 width="50" alt="Default Profile Picture"/>
                         </div>
                         <div class="col d-flex align-items-center">
                             <div>
                                 <h5 th:text="${post.getUser().getUsername()}" class="card-title mb-0">Username</h5>
                                 <p th:text="${post.getContent()}" class="card-text mt-2">This is a post</p>
+                                <div th:if="${post.getLikes().size() == 1}">
+                                    <p th:text="${post.getLikes().size()} + ' like'" style="font-weight: bold;"></p>
+                                </div>
+                                <div th:if="${post.getLikes().size() != 1}">
+                                    <p th:text="${post.getLikes().size()} + ' likes'" style="font-weight: bold;"></p>
+                                </div>
                                 <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">
                                     <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}">
                                         <button class="btn btn-primary btn-sm" type="submit">Delete post</button>
                                     </form>
                                 </div>
                                 <div th:if="${post.getUser().getUsername() != sessionUser.getUsername()}">
-                                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
-                                        <button class="btn btn-primary btn-sm" type="submit">like post</button>
-                                    </form>
-                                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
-                                        <button class="btn btn-primary btn-sm" type="submit">unlike post</button>
-                                    </form>
+                                    <div th:if="${!post.isLikedBy(sessionUser)}">
+                                        <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
+                                            <button class="btn btn-primary btn-sm" type="submit">like post</button>
+                                        </form>
+                                    </div>
+                                    <div th:if="${post.isLikedBy(sessionUser)}">
+                                        <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
+                                            <button class="btn btn-primary btn-sm" type="submit">unlike post</button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <p th:text="${post.getLikes().size()} + 'likes'"></p>
                             </div>
                         </div>
                     </div>
