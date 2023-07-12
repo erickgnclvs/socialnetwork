@@ -2,6 +2,9 @@ package erick.projects.socialnetwork.model;
 
 import jakarta.persistence.*;
 
+/**
+ * A JPA entity representing like relationships between users and posts.
+ */
 @Entity
 @Table(name = "likes", uniqueConstraints = @UniqueConstraint(columnNames = {"post_id", "user_id"}))
 public class Like {

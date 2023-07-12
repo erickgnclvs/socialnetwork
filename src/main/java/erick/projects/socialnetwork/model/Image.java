@@ -2,6 +2,9 @@ package erick.projects.socialnetwork.model;
 
 import jakarta.persistence.*;
 
+/**
+ * A JPA entity representing an image.
+ */
 @Entity
 public class Image {
 

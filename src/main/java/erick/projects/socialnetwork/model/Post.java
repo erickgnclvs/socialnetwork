@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * A JPA entity representing a post.
+ */
 @Entity
 @Table(name = "posts")
 public class Post {

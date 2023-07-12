@@ -2,6 +2,9 @@ package erick.projects.socialnetwork.model;
 
 import jakarta.persistence.*;
 
+/**
+ * A JPA entity representing a follow relationship between two users.
+ */
 @Entity
 public class Follow {
 

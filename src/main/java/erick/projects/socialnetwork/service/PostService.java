@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * A service class for managing posts related actions.
+ */
 @Service
 public class PostService {
     private final PostRepository postRepository;
@@ -24,6 +27,14 @@ public class PostService {
     private final FollowRepository followRepository;
     private final LikeRepository likeRepository;
 
+    /**
+     * Constructor with @Autowired annotation to automatically inject dependencies.
+     *
+     * @param postRepository   the PostRepository to use
+     * @param userRepository   the UserRepository to use
+     * @param followRepository the FollowRepository to use
+     * @param likeRepository   the LikeRepository to use
+     */
     @Autowired
     public PostService(PostRepository postRepository, UserRepository userRepository, FollowRepository followRepository, LikeRepository likeRepository) {
         this.postRepository = postRepository;
@@ -32,6 +43,12 @@ public class PostService {
         this.likeRepository = likeRepository;
     }
 
+    /**
+     * Creates a new post from a user.
+     *
+     * @param post    the post to create
+     * @param session the HTTP session
+     */
     @Transactional
     public void createPost(Post post, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -40,23 +57,43 @@ public class PostService {
         postRepository.save(post);
     }
 
+    /**
+     * Returns a list of posts for a user's feed.
+     *
+     * @param user the user whose feed to retrieve
+     * @return a list of posts for the user's feed
+     */
     public List<Post> getFeedPosts(User user) {
+        // Find all follow relationships where the user is the follower
         List<Follow> follows = followRepository.findByFollower(user);
+        // Extract a list of followed users from the follow relationships
         List<User> followedUsers = follows.stream().map(Follow::getFollowed).toList();
+        // Find all posts by followed users using the postRepository
         List<Post> feedPosts = postRepository.findByUserIn(followedUsers);
+        // Add all posts by the user to the list of feed posts
         feedPosts.addAll(user.getPosts());
+        // Sort the feed posts in reverse chronological order by creation time
         feedPosts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
+        // Return the list of feed posts
         return feedPosts;
     }
 
-    public FollowRepository getFollowRepository() {
-        return followRepository;
+    /**
+     * Deletes a post by its id.
+     *
+     * @param postId the id of the post to delete
+     */
+    public void deletePostById(Long postId) {
+        Post post = getPostById(postId);
+        postRepository.delete(post);
     }
 
-    public PostRepository getPostRepository() {
-        return postRepository;
-    }
-
+    /**
+     * Returns a post by its id.
+     *
+     * @param postId the id of the post to retrieve
+     * @return the post with the given id, or null if it doesn't exist
+     */
     public Post getPostById(Long postId) {
         return postRepository.getPostById(postId);
     }
@@ -65,8 +102,12 @@ public class PostService {
         return likeRepository;
     }
 
-    public void deletePostById(Long postId) {
-        Post post = getPostById(postId);
-        postRepository.delete(post);
+    public FollowRepository getFollowRepository() {
+        return followRepository;
+    }
+
+
+    public PostRepository getPostRepository() {
+        return postRepository;
     }
 }

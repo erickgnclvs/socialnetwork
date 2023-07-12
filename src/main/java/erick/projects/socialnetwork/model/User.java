@@ -6,9 +6,8 @@ import jakarta.validation.constraints.Email;
 import java.util.List;
 
 /**
- * This Class represents the Users and builds the table in the database for them
+ * A JPA entity representing a user.
  */
-
 @Entity
 @Table(name = "users")
 public class User {
