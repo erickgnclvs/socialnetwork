@@ -6,65 +6,118 @@
 
 <!-- Bootstrap layout -->
 <div class="container mt-3">
-  <div class="row">
-    <div class="col-md-3">
+    <div class="row">
+        <div class="col-md-3">
 
-      <!-- User information -->
-      <div th:replace="~{layout :: userinfo}"></div>
+            <!-- User information -->
+            <div th:replace="~{layout :: userinfo}"></div>
 
-      <!-- Bootstrap layout -->
-    </div>
-    <div class="col-md-9">
-
-      <!-- Make a new post form -->
-      <div th:replace="~{layout :: newpost}"></div>
-
-      <!-- For each post in posts -->
-      <div th:each="post : ${feedPosts}" class="post card mt-3">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-auto pr-0">
-              <img th:if="${post.getUser().getProfileImage() != null}" th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50" alt="Profile Picture"/>
-              <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
-            </div>
-            <div class="col">
-              <div class="post-content">
-                <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}" th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
-                <p th:text="${post.getContent()}" class="card-text">This is a post</p>
-<!--                TODO: change this part so the user has a small button to view post or delete it, not a big one-->
-                <a th:href="@{/post/{postId}(postId=${post.getId()})}" >
-                  <button class="btn btn-primary" type="submit">View post</button>
-                </a>
-                <div th:if="${post.getLikes().size() == 1}">
-                  <p th:text="${post.getLikes().size()} + ' like'" style="font-weight: bold;"></p>
-                </div>
-                <div th:if="${post.getLikes().size() != 1}">
-                  <p th:text="${post.getLikes().size()} + ' likes'" style="font-weight: bold;"></p>
-                </div>
-                <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">
-                  <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}">
-                    <button class="btn btn-primary btn-sm" type="submit">Delete post</button>
-                  </form>
-                </div>
-                <div th:if="${post.getUser().getUsername() != sessionUser.getUsername()}">
-                  <div th:if="${!post.isLikedBy(sessionUser)}">
-                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
-                      <button class="btn btn-primary btn-sm" type="submit">like post</button>
-                    </form>
-                  </div>
-                  <div th:if="${post.isLikedBy(sessionUser)}">
-                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
-                      <button class="btn btn-primary btn-sm" type="submit">unlike post</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <!-- Bootstrap layout -->
         </div>
-        <!-- Repeat this block for each tweet -->
+        <div class="col-md-9">
 
-      </div>
+            <!-- Make a new post form -->
+            <div th:replace="~{layout :: newpost}"></div>
+
+            <!-- For each post in posts -->
+            <!--      <div th:each="post : ${feedPosts}" class="post card mt-3">-->
+            <!--        <div class="card-body">-->
+            <!--          <div class="row">-->
+            <!--            <div class="col-auto pr-0">-->
+            <!--              <img th:if="${post.getUser().getProfileImage() != null}" th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50" alt="Profile Picture"/>-->
+            <!--              <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>-->
+            <!--            </div>-->
+            <!--            <div class="col">-->
+            <!--              <div class="post-content">-->
+            <!--                <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}" th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>-->
+            <!--                <p th:text="${post.getContent()}" class="card-text">This is a post</p>-->
+            <!--&lt;!&ndash;                TODO: change this part so the user has a small button to view post or delete it, not a big one&ndash;&gt;-->
+            <!--                <a th:href="@{/post/{postId}(postId=${post.getId()})}" >-->
+            <!--                  <button class="btn btn-primary" type="submit">View post</button>-->
+            <!--                </a>-->
+            <!--                <div th:if="${post.getLikes().size() == 1}">-->
+            <!--                  <p th:text="${post.getLikes().size()} + ' like'" style="font-weight: bold;"></p>-->
+            <!--                </div>-->
+            <!--                <div th:if="${post.getLikes().size() != 1}">-->
+            <!--                  <p th:text="${post.getLikes().size()} + ' likes'" style="font-weight: bold;"></p>-->
+            <!--                </div>-->
+            <!--                <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">-->
+            <!--                  <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}">-->
+            <!--                    <button class="btn btn-primary btn-sm" type="submit">Delete post</button>-->
+            <!--                  </form>-->
+            <!--                </div>-->
+            <!--                <div th:if="${post.getUser().getUsername() != sessionUser.getUsername()}">-->
+            <!--                  <div th:if="${!post.isLikedBy(sessionUser)}">-->
+            <!--                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">-->
+            <!--                      <button class="btn btn-primary btn-sm" type="submit">like post</button>-->
+            <!--                    </form>-->
+            <!--                  </div>-->
+            <!--                  <div th:if="${post.isLikedBy(sessionUser)}">-->
+            <!--                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">-->
+            <!--                      <button class="btn btn-primary btn-sm" type="submit">unlike post</button>-->
+            <!--                    </form>-->
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <!--          </div>-->
+            <!--        </div>-->
+            <div th:each="post : ${feedPosts}" class="post card mt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-auto pr-0">
+                            <img th:if="${post.getUser().getProfileImage() != null}"
+                                 th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50"
+                                 alt="Profile Picture"/>
+                            <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}"
+                                 width="50" alt="Default Profile Picture"/>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-between">
+                                <div class="post-content">
+                                    <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}" th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
+                                    <p th:text="${post.getContent()}" class="card-text">This is a post</p>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn" style="background-color:transparent" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">⋮</button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <a th:href="@{/post/{postId}(postId=${post.getId()})}" class="dropdown-item">View post</a>
+                                        <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">
+                                            <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}">
+                                                <button class="dropdown-item" type="submit">Delete post</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${post.getLikes().size() == 1}">
+                                <p th:text="${post.getLikes().size()} + ' like'" style="font-weight: bold;"></p>
+                            </div>
+                            <div th:if="${post.getLikes().size() != 1}">
+                                <p th:text="${post.getLikes().size()} + ' likes'" style="font-weight: bold;"></p>
+                            </div>
+                            <div th:if="${post.getUser().getUsername() != sessionUser.getUsername()}">
+                                <div th:if="${!post.isLikedBy(sessionUser)}">
+                                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
+                                        <button class="btn btn-primary btn-sm" type="submit">like post</button>
+                                    </form>
+                                </div>
+                                <div th:if="${post.isLikedBy(sessionUser)}">
+                                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
+                                        <button class="btn btn-primary btn-sm" type="submit">unlike post</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repeat this block for each tweet -->
+
+        </div>
     </div>
-  </div>
-  </body>
+</div>
+</body>
