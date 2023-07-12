@@ -12,6 +12,12 @@
             <!-- User information -->
             <div th:replace="~{layout :: userinfo}"></div>
 
+            <div th:if="${sessionUser.getUsername() != post.getUser().getUsername()}">
+                <a th:href="@{/{username}(username=${post.getUser().getUsername()})}">
+                    <button class="btn btn-primary m-3" type="submit" value="View profile">View profile</button>
+                </a>
+            </div>
+
             <!-- Bootstrap layout -->
         </div>
         <div class="col-md-9">
