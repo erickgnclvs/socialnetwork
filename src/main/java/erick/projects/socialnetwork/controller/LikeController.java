@@ -38,7 +38,7 @@ public class LikeController {
         User user = userService.findByUsername(sessionUser.getUsername());
         Post post = postService.getPostById(postId);
         likeService.likePost(post, user);
-        return "redirect:/post/{postId}";
+        return "redirect:/home";
     }
 
     @PostMapping("/unlike/{postId}")
@@ -47,7 +47,7 @@ public class LikeController {
         User user = userService.findByUsername(sessionUser.getUsername());
         Post post = postService.getPostById(postId);
         likeService.unlikePost(post, user);
-        return "redirect:/post/{postId}";
+        return "redirect:/home";
     }
 
     public UserService getUserService() {

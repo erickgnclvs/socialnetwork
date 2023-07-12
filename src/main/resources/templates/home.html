@@ -31,9 +31,33 @@
               <div class="post-content">
                 <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}" th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
                 <p th:text="${post.getContent()}" class="card-text">This is a post</p>
+<!--                TODO: change this part so the user has a small button to view post or delete it, not a big one-->
                 <a th:href="@{/post/{postId}(postId=${post.getId()})}" >
                   <button class="btn btn-primary" type="submit">View post</button>
                 </a>
+                <div th:if="${post.getLikes().size() == 1}">
+                  <p th:text="${post.getLikes().size()} + ' like'" style="font-weight: bold;"></p>
+                </div>
+                <div th:if="${post.getLikes().size() != 1}">
+                  <p th:text="${post.getLikes().size()} + ' likes'" style="font-weight: bold;"></p>
+                </div>
+                <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">
+                  <form method="post" th:action="@{/post/{postId}/delete(postId=${post.getId()})}">
+                    <button class="btn btn-primary btn-sm" type="submit">Delete post</button>
+                  </form>
+                </div>
+                <div th:if="${post.getUser().getUsername() != sessionUser.getUsername()}">
+                  <div th:if="${!post.isLikedBy(sessionUser)}">
+                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
+                      <button class="btn btn-primary btn-sm" type="submit">like post</button>
+                    </form>
+                  </div>
+                  <div th:if="${post.isLikedBy(sessionUser)}">
+                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
+                      <button class="btn btn-primary btn-sm" type="submit">unlike post</button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
