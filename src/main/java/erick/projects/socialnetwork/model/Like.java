@@ -12,9 +12,12 @@ public class Like {
     @GeneratedValue
     private Long id;
     @ManyToOne
-    private Post post;
-    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     public Like() {
     }

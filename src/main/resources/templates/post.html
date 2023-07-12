@@ -37,6 +37,15 @@
                                         <button class="btn btn-primary btn-sm" type="submit">Delete post</button>
                                     </form>
                                 </div>
+                                <div th:if="${post.getUser().getUsername() != sessionUser.getUsername()}">
+                                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
+                                        <button class="btn btn-primary btn-sm" type="submit">like post</button>
+                                    </form>
+                                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
+                                        <button class="btn btn-primary btn-sm" type="submit">unlike post</button>
+                                    </form>
+                                </div>
+                                <p th:text="${post.getLikes().size()} + 'likes'"></p>
                             </div>
                         </div>
                     </div>

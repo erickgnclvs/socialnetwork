@@ -46,7 +46,7 @@ public class User {
     @OneToMany(mappedBy = "followed")
     private List<Follow> followers;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Like> likes;
 
     public User() {

@@ -25,7 +25,7 @@ public class Post {
 
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Like> likes;
 
     public Post(Long id, String content, LocalDateTime createdAt, User user) {

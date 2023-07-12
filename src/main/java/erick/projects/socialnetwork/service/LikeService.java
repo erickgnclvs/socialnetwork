@@ -30,9 +30,13 @@ public class LikeService {
      */
     public void likePost(Post post, User user) {
         Like like = new Like();
-        like.setPost(post);
-        like.setUser(user);
-        likeRepository.save(like);
+        if (!post.getUser().getId().equals(user.getId())) {
+            if (likeRepository.findByPostAndUser(post, user) == null) {
+                like.setPost(post);
+                like.setUser(user);
+                likeRepository.save(like);
+            }
+        }
     }
 
     /**
