@@ -6,6 +6,7 @@ import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.repository.ImageRepository;
 import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -145,10 +146,11 @@ public class UserController {
      * @param username the username of the user being accessed
      * @param model    the model to add attributes to
      * @param session  the HTTP session
+     * @param request
      * @return either a redirect or a view name depending on the situation
      */
     @GetMapping("/{username}")
-    public String showUserProfile(@PathVariable String username, Model model, HttpSession session) {
+    public String showUserProfile(@PathVariable String username, Model model, HttpSession session, HttpServletRequest request) {
         // Check if there is a user object in the session
         User tmp = (User) session.getAttribute("user");
         if (tmp != null) {
@@ -158,10 +160,13 @@ public class UserController {
             User user = userService.findByUsername(username);
             if (user != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
+                DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
+                model.addAttribute("formatterHour", formatterHour);
                 model.addAttribute("formatter", formatter);
                 model.addAttribute("user", user);
                 List<Post> posts = user.getPosts();
                 posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
+                model.addAttribute("currentPath", request.getRequestURI());
                 model.addAttribute("posts", posts);
                 boolean isFollowing = followService.isFollowing(sessionUser, user);
                 model.addAttribute("isFollowing", isFollowing);

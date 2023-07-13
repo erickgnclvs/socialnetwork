@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Controller for handling HTTP requests related to liking and unliking posts.
@@ -33,21 +34,21 @@ public class LikeController {
     }
 
     @PostMapping("/like/{postId}")
-    public String likePost(@PathVariable("postId") Long postId, HttpSession session) {
+    public String likePost(@PathVariable("postId") Long postId, HttpSession session, @RequestParam("referer") String referer) {
         User sessionUser = (User) session.getAttribute("user");
         User user = userService.findByUsername(sessionUser.getUsername());
         Post post = postService.getPostById(postId);
         likeService.likePost(post, user);
-        return "redirect:/home";
+        return "redirect:" + referer;
     }
 
     @PostMapping("/unlike/{postId}")
-    public String unlikePost(@PathVariable("postId") Long postId, HttpSession session) {
+    public String unlikePost(@PathVariable("postId") Long postId, HttpSession session, @RequestParam("referer") String referer) {
         User sessionUser = (User) session.getAttribute("user");
         User user = userService.findByUsername(sessionUser.getUsername());
         Post post = postService.getPostById(postId);
         likeService.unlikePost(post, user);
-        return "redirect:/home";
+        return "redirect:" + referer;
     }
 
     public UserService getUserService() {

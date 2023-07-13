@@ -61,7 +61,7 @@
                                 <!-- Like button -->
                                 <div th:if="${!post.isLikedBy(user)}">
                                     <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
-                                        <button class="btn btn-sm" style="background-color: transparent"
+                                        <input type="hidden" name="referer" th:value="${currentPath}">                                        <button class="btn btn-sm" style="background-color: transparent"
                                                 type="submit">
                                             <i class="fa fa-heart-o"></i>
                                         </button>
@@ -69,6 +69,7 @@
                                 </div>
                                 <div th:if="${post.isLikedBy(user)}">
                                     <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
+                                        <input type="hidden" name="referer" th:value="${currentPath}">
                                         <button class="btn btn-sm" style="background-color: transparent"
                                                 type="submit">
                                             <i class="fa fa-heart"></i>

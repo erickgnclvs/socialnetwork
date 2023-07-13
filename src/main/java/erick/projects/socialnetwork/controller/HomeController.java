@@ -4,6 +4,7 @@ import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.PostService;
 import erick.projects.socialnetwork.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,7 @@ public class HomeController {
      * @return either "home" or "redirect:/login" depending on whether or not there is a logged-in user
      */
     @GetMapping("/home")
-    public String showHomePage(Model model, HttpSession session) {
+    public String showHomePage(Model model, HttpSession session, HttpServletRequest request) {
         // Check if user is logged in
         User sessionUser = (User) session.getAttribute("user");
         if (sessionUser != null) {
@@ -59,6 +60,7 @@ public class HomeController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             model.addAttribute("formatter", formatter);
             DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
+            model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("formatterHour", formatterHour);
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("user", user);

@@ -5,6 +5,7 @@ import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.LikeService;
 import erick.projects.socialnetwork.service.PostService;
 import erick.projects.socialnetwork.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,10 +78,11 @@ public class PostController {
      * @param postId  the ID of the post to display
      * @param model   the model for passing data to the view
      * @param session the HTTP session
+     * @param request
      * @return either "post" or "redirect:/login" depending on whether or not there is a logged-in user
      */
     @GetMapping("post/{postId}")
-    public String showPostById(@PathVariable("postId") Long postId, Model model, HttpSession session) {
+    public String showPostById(@PathVariable("postId") Long postId, Model model, HttpSession session, HttpServletRequest request) {
         // Check if user is logged in
         User tmp = (User) session.getAttribute("user");
         if (tmp != null) {
@@ -89,6 +91,7 @@ public class PostController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             Post post = postService.getPostById(postId);
             DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
+            model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("formatterHour", formatterHour);
             model.addAttribute("formatter", formatter);
             model.addAttribute("post", post);
