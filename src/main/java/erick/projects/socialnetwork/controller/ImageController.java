@@ -107,4 +107,23 @@ public class ImageController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/images/error")
+    public ResponseEntity<byte[]> getErrorImage() {
+        // Load the default image from the classpath
+        Resource resource = new ClassPathResource("/static/images/error.png");
+        try {
+            // Set the response headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+            headers.setContentLength(resource.contentLength());
+
+            // Return the image as a byte array
+            return new ResponseEntity<>(IOUtils.toByteArray(resource.getInputStream()), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            // Handle any errors
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
