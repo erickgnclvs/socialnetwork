@@ -56,7 +56,10 @@
     <img th:unless="${user.getProfileImage() != null}" th:src="@{/images/default}" alt="Default Profile Picture"/>
 
     <div class="card-body">
-        <h5 th:text="${user.getUsername()}" class="card-title">Username</h5>
+        <div th:if="${user.getName() != null}">
+            <h4 style="font-weight: bold;" th:text="${user.getName()}">Name</h4>
+        </div>
+        <h5 th:text="'@' + ${user.getUsername()}" class="card-title">Username</h5>
         <p th:text="${user.getBiography()}" class="card-text">this is a biography</p>
         <div class="followers">
             <a th:href="@{/{username}/followers(username=${user.getUsername()})}" class="card-link">Followers</a>
