@@ -23,6 +23,7 @@
             <div th:each="post : ${feedPosts}" class="post card mt-3">
                 <div class="card-body">
                     <div class="row">
+                        <!-- Profile picture -->
                         <div class="col-auto pr-0">
                             <img th:if="${post.getUser().getProfileImage() != null}"
                                  th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50"
@@ -32,11 +33,13 @@
                         </div>
                         <div class="col">
                             <div class="d-flex justify-content-between">
+                                <!-- Post content -->
                                 <div class="post-content ml-2">
                                     <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}"
                                         th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
                                     <p th:text="${post.getContent()}" class="card-text">This is a post</p>
                                 </div>
+                                <!-- 3-dot menu -->
                                 <div class="dropdown">
                                     <button class="btn" style="background-color:transparent" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -54,32 +57,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="mt-2" style="display:inline-flex">
-                                    <div th:if="${!post.isLikedBy(user)}">
-                                        <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
-                                            <button class="btn btn-sm" style="background-color: transparent"
-                                                    type="submit">
-                                                <i class="fa fa-heart-o"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div th:if="${post.isLikedBy(user)}">
-                                        <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
-                                            <button class="btn btn-sm" style="background-color: transparent"
-                                                    type="submit">
-                                                <i class="fa fa-heart"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div th:if="${post.getLikes().size() == 1}">
+                            <div class="mt-2 d-flex" style="display:inline-flex">
+                                <!-- Like button -->
+                                <div th:if="${!post.isLikedBy(user)}">
+                                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
+                                        <button class="btn btn-sm" style="background-color: transparent"
+                                                type="submit">
+                                            <i class="fa fa-heart-o"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if="${post.isLikedBy(user)}">
+                                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
+                                        <button class="btn btn-sm" style="background-color: transparent"
+                                                type="submit">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <!-- Like number -->
+                                <div th:if="${post.getLikes().size() == 1}">
                                         <span th:text="${post.getLikes().size()} + ' like'"
                                               style="font-weight: bold;"></span>
-                                    </div>
-                                    <div th:if="${post.getLikes().size() != 1}">
+                                </div>
+                                <div th:if="${post.getLikes().size() != 1}">
                                         <span th:text="${post.getLikes().size()} + ' likes'"
                                               style="font-weight: bold;"></span>
-                                    </div>
+                                </div>
+                                <!-- Created at -->
+                                <div class="ml-auto mr-4">
+                                    <span th:text="${post.getCreatedAt().format(formatterHour)}"></span>
                                 </div>
                             </div>
                         </div>

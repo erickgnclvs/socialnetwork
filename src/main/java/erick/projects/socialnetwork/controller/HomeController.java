@@ -58,6 +58,8 @@ public class HomeController {
             List<Post> feedPosts = postService.getFeedPosts(user);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             model.addAttribute("formatter", formatter);
+            DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
+            model.addAttribute("formatterHour", formatterHour);
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("user", user);
             model.addAttribute("feedPosts", feedPosts);

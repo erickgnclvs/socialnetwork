@@ -38,11 +38,13 @@
 
             <!-- Make a new post form -->
             <div th:if="${sessionUser.getUsername() == username}">
-                <div th:replace="~{layout :: newpost}"></div>
+                <div class="mb-3">
+                    <div th:replace="~{layout :: newpost}"></div>
+                </div>
             </div>
 
             <!-- For each post in posts -->
-            <div th:each="post : ${posts}" class="post card mt-3">
+            <div th:each="post : ${posts}" class="post card mb-3">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-auto pr-0">

@@ -88,6 +88,8 @@ public class PostController {
             User sessionUser = userService.findByUsername(tmp.getUsername());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             Post post = postService.getPostById(postId);
+            DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
+            model.addAttribute("formatterHour", formatterHour);
             model.addAttribute("formatter", formatter);
             model.addAttribute("post", post);
             model.addAttribute("sessionUser", sessionUser);
