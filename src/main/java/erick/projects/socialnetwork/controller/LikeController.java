@@ -33,6 +33,9 @@ public class LikeController {
         this.likeService = likeService;
     }
 
+    /**
+     * Likes post
+     */
     @PostMapping("/like/{postId}")
     public String likePost(@PathVariable("postId") Long postId, HttpSession session, @RequestParam("referer") String referer) {
         User sessionUser = (User) session.getAttribute("user");
@@ -42,6 +45,9 @@ public class LikeController {
         return "redirect:" + referer;
     }
 
+    /**
+     * Unlikes post
+     */
     @PostMapping("/unlike/{postId}")
     public String unlikePost(@PathVariable("postId") Long postId, HttpSession session, @RequestParam("referer") String referer) {
         User sessionUser = (User) session.getAttribute("user");
