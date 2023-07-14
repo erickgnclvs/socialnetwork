@@ -71,6 +71,10 @@
             <a th:href="@{/{username}/following(username=${user.getUsername()})}" class="card-link">Following</a>
             <span th:text="${user.getFollowing().size()}" class="count">500</span>
         </div>
+        <div class="likes">
+            <a th:href="@{/{username}/likes(username=${user.getUsername()})}" class="card-link">Likes</a>
+            <span th:text="${user.getLikes().size()}" class="count">500</span>
+        </div>
     </div>
 </div>
 

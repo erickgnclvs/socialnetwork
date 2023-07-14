@@ -52,6 +52,10 @@ public class User {
     public User() {
     }
 
+    public List<Like> getLikes() {
+        return likes;
+    }
+
     public List<Post> getPosts() {
         return posts;
     }
