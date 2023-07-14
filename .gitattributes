@@ -1,2 +1,2 @@
-src/main/resources/templates/* linguist-documentation
-src/main/resources/templates/* linguist-vendored
+src/main/resources/* linguist-documentation
+src/main/resources/* linguist-vendored
