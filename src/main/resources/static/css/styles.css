@@ -56,5 +56,10 @@ body {
 
 
 .login-register-card {
-    margin-top: 20%;
+    margin-top: 15%;
+}
+
+.user-link, .user-link:hover {
+    text-decoration: none !important;
+    color: #333333 !important;
 }

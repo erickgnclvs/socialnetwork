@@ -25,18 +25,22 @@
                     <div class="row">
                         <!-- Profile picture -->
                         <div class="col-auto pr-0">
-                            <img th:if="${post.getUser().getProfileImage() != null}"
-                                 th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50"
-                                 alt="Profile Picture"/>
-                            <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}"
-                                 width="50" alt="Default Profile Picture"/>
+                            <a th:href="@{/{username}(username=${post.getUser().getUsername()})}">
+                                <img th:if="${post.getUser().getProfileImage() != null}"
+                                     th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50"
+                                     alt="Profile Picture"/>
+                                <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}"
+                                     width="50" alt="Default Profile Picture"/>
+                            </a>
                         </div>
                         <div class="col">
                             <div class="d-flex justify-content-between">
                                 <!-- Post content -->
                                 <div class="post-content ml-2">
-                                    <h5 th:href="@{/{username}(username=${post.getUser().getUsername()})}"
-                                        th:text="${post.getUser().getUsername()}" class="card-title">Username</h5>
+                                    <a th:href="@{/{username}(username=${post.getUser().getUsername()})}">
+                                        <h5 th:text="${post.getUser().getUsername()}" class="card-title user-link">
+                                            Username</h5>
+                                    </a>
                                     <p th:text="${post.getContent()}" class="card-text">This is a post</p>
                                 </div>
                                 <!-- 3-dot menu -->
@@ -61,7 +65,8 @@
                                 <!-- Like button -->
                                 <div th:if="${!post.isLikedBy(user)}">
                                     <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
-                                        <input type="hidden" name="referer" th:value="${currentPath}">                                        <button class="btn btn-sm" style="background-color: transparent"
+                                        <input type="hidden" name="referer" th:value="${currentPath}">
+                                        <button class="btn btn-sm" style="background-color: transparent"
                                                 type="submit">
                                             <i class="fa fa-heart-o"></i>
                                         </button>
