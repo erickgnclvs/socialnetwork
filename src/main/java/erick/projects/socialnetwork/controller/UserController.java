@@ -119,6 +119,7 @@ public class UserController {
         } else {
             // If authentication fails, add an error message to the model and return the view name "login"
             model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("authFailed", true);
             return "login";
         }
     }
