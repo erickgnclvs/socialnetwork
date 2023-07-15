@@ -81,4 +81,12 @@ public class UserService {
     public void save(User user) {
         userRepository.save(user);
     }
+
+    public boolean isUsernameTaken(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
+
+    public boolean isEmailTaken(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
 }

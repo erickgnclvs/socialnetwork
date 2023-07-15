@@ -21,6 +21,7 @@
                             <label for="password">Password</label>
                             <input type="password" th:field="*{password}" id="password" class="form-control" required>
                         </div>
+                        <div id="warning-message" class="alert alert-danger" role="alert" style="display: none"></div>
                         <div class="form-group d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary mr-2">Register</button>
                             <a href="/login" class="btn btn-primary">Login</a>
@@ -32,3 +33,7 @@
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    let registrationFailed = [[${registrationFailed}]];
+    let error = [[${error}]];
+</script>

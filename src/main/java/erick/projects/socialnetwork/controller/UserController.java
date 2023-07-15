@@ -9,6 +9,7 @@ import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,13 +65,30 @@ public class UserController {
      * @return a redirect to the /login endpoint
      */
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user) {
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
         // Validate user input (e.g., check if username is taken)
-        // Create a new user using the userService
-        userService.createUser(user);
-        // Redirect to the /login endpoint
-        return "redirect:/login";
+        boolean isUsernameTaken = userService.isUsernameTaken(user.getUsername());
+        boolean isEmailTaken = userService.isEmailTaken(user.getEmail());
+        if (isUsernameTaken) {
+            // If the username is taken, add an error message to the model and return the view name "register"
+            model.addAttribute("error", "Username is already taken");
+            user.setUsername(null);
+            model.addAttribute("registrationFailed", true);
+            return "register";
+        } else if (isEmailTaken) {
+            // If the username is taken, add an error message to the model and return the view name "register"
+            model.addAttribute("error", "Email is already taken");
+            user.setEmail(null);
+            model.addAttribute("registrationFailed", true);
+            return "register";
+        } else {
+            // If the username is not taken, create a new user using the userService
+            userService.createUser(user);
+            // Redirect to the /login endpoint
+            return "redirect:/login";
+        }
     }
+
 
     /**
      * Displays login form.

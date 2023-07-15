@@ -12,3 +12,9 @@ window.addEventListener("load", function() {
         displayWarningMessage("Invalid username or password");
     }
 });
+
+window.addEventListener("load", function () {
+    if (registrationFailed) {
+        displayWarningMessage(error);
+    }
+});
