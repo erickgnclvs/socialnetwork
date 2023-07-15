@@ -21,88 +21,10 @@
 
             <!-- For each post in posts -->
             <div th:each="post : ${feedPosts}" class="post card mt-3">
-                <div class="card-body">
-                    <div class="row">
-                        <!-- Profile picture -->
-                        <div class="col-auto pr-0">
-                            <a th:href="@{/{username}(username=${post.getUser().getUsername()})}">
-                                <img th:if="${post.getUser().getProfileImage() != null}"
-                                     th:src="@{'/images/' + ${post.getUser().getProfileImage().getId()}}" width="50"
-                                     alt="Profile Picture"/>
-                                <img th:unless="${post.getUser().getProfileImage() != null}" th:src="@{/images/default}"
-                                     width="50" alt="Default Profile Picture"/>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <div class="d-flex justify-content-between">
-                                <!-- Post content -->
-                                <div class="post-content ml-2">
-                                    <a th:href="@{/{username}(username=${post.getUser().getUsername()})}">
-                                        <h5 th:text="${post.getUser().getUsername()}" class="card-title user-link">
-                                            Username</h5>
-                                    </a>
-                                    <p th:text="${post.getContent()}" class="card-text">This is a post</p>
-                                </div>
-                                <!-- 3-dot menu -->
-                                <div class="dropdown">
-                                    <button class="btn" style="background-color:transparent" type="button"
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">⋮
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                        <a th:href="@{/post/{postId}(postId=${post.getId()})}" class="dropdown-item">View
-                                            post</a>
-                                        <div th:if="${post.getUser().getUsername() == sessionUser.getUsername()}">
-                                            <form method="post"
-                                                  th:action="@{/post/{postId}/delete(postId=${post.getId()})}">
-                                                <button class="dropdown-item" type="submit">Delete post</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-2 d-flex" style="display:inline-flex">
-                                <!-- Like button -->
-                                <div th:if="${!post.isLikedBy(user)}">
-                                    <form method="post" th:action="@{/like/{postId}(postId=${post.getId()})}">
-                                        <input type="hidden" name="referer" th:value="${currentPath}">
-                                        <button class="btn btn-sm" style="background-color: transparent"
-                                                type="submit">
-                                            <i class="fa fa-heart-o"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                <div th:if="${post.isLikedBy(user)}">
-                                    <form method="post" th:action="@{/unlike/{postId}(postId=${post.getId()})}">
-                                        <input type="hidden" name="referer" th:value="${currentPath}">
-                                        <button class="btn btn-sm" style="background-color: transparent"
-                                                type="submit">
-                                            <i class="fa fa-heart"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                <!-- Like number -->
-                                <div th:if="${post.getLikes().size() == 1}">
-                                        <span th:text="${post.getLikes().size()} + ' like'"
-                                              style="font-weight: bold;"></span>
-                                </div>
-                                <div th:if="${post.getLikes().size() != 1}">
-                                        <span th:text="${post.getLikes().size()} + ' likes'"
-                                              style="font-weight: bold;"></span>
-                                </div>
-                                <!-- Created at -->
-                                <div class="ml-auto mr-4">
-                                    <span th:text="${post.getCreatedAt().format(formatterHour)}"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="~{layout :: post}"></div>
             </div>
-            <!-- Repeat this block for each tweet -->
 
         </div>
     </div>
-</div>
-<footer th:replace="~{layout :: footer}"></footer>
-</body>
+    <footer th:replace="~{layout :: footer}"></footer>
+    </body>
