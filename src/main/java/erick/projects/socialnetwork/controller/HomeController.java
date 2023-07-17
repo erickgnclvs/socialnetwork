@@ -62,7 +62,7 @@ public class HomeController {
             DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
             model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("formatterHour", formatterHour);
-            model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("sessionUser", user);
             model.addAttribute("user", user);
             model.addAttribute("feedPosts", feedPosts);
             return "home";
