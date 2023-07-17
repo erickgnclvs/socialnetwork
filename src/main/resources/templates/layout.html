@@ -7,12 +7,12 @@
         <title>Social Network</title>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" th:href="@{/css/styles.css}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
         <script type="text/javascript" th:src="@{/js/main.js}"></script>
     </head>
     <body>
@@ -82,7 +82,7 @@
 <!-- Make a new post form -->
 <div th:fragment="newpost" class="card">
     <div class="card-body">
-        <form method="POST" action="/create-post" th:object="${post}">
+        <form id="newpost-form" method="POST" action="/create-post" th:object="${post}">
             <div class="form-group">
                 <textarea name="content" field="*{content}" class="form-control" rows="3"
                           placeholder="What's on your mind?"></textarea>
@@ -158,13 +158,18 @@
                     </form>
                 </div>
                 <!-- Like number -->
-                <div th:if="${post.getLikes().size() == 1}">
+                <div th:if="${post.getLikes() != null}">
+                    <div th:if="${post.getLikes().size() == 1}">
                                         <span th:text="${post.getLikes().size()} + ' like'"
                                               style="font-weight: bold;"></span>
-                </div>
-                <div th:if="${post.getLikes().size() != 1}">
+                    </div>
+                    <div th:if="${post.getLikes().size() != 1}">
                                         <span th:text="${post.getLikes().size()} + ' likes'"
                                               style="font-weight: bold;"></span>
+                    </div>
+                </div>
+                <div th:if="${post.getLikes() == null}">
+                    <span style="font-weight: bold;">0 likes</span>
                 </div>
                 <!-- Created at -->
                 <div class="ml-auto mr-4">

@@ -1,7 +1,6 @@
 package erick.projects.socialnetwork.service;
 
 import erick.projects.socialnetwork.model.Follow;
-import erick.projects.socialnetwork.model.Like;
 import erick.projects.socialnetwork.model.Post;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.repository.FollowRepository;
@@ -56,6 +55,15 @@ public class PostService {
         post.setCreatedAt(LocalDateTime.now());
         postRepository.save(post);
     }
+
+    @Transactional
+    public Post createPostReturnPost(Post post, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        post.setUser(userRepository.findByUsername(user.getUsername()));
+        post.setCreatedAt(LocalDateTime.now());
+        return postRepository.save(post);
+    }
+
 
     /**
      * Returns a list of posts for a user's feed.

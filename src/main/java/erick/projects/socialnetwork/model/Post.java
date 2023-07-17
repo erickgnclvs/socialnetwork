@@ -1,5 +1,6 @@
 package erick.projects.socialnetwork.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -39,6 +40,9 @@ public class Post {
     }
 
     public boolean isLikedBy(User user) {
+        if (likes == null) {
+            return false;
+        }
         return likes.stream().anyMatch(like -> like.getUser().equals(user));
     }
 

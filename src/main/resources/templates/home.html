@@ -20,8 +20,10 @@
             <div th:replace="~{layout :: newpost}"></div>
 
             <!-- For each post in posts -->
-            <div th:each="post : ${feedPosts}" class="post card mt-3">
-                <div th:replace="~{layout :: post}"></div>
+            <div id="posts">
+                <div th:each="post : ${feedPosts}" class="post card mt-3">
+                    <div th:replace="~{layout :: post}"></div>
+                </div>
             </div>
 
         </div>

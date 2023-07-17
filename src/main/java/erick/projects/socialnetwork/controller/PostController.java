@@ -8,12 +8,11 @@ import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.format.DateTimeFormatter;
 
@@ -54,11 +53,34 @@ public class PostController {
     }
 
     /**
+    @PostMapping("/create-post")
+    public ModelAndView createPost(@ModelAttribute("post") Post post, HttpSession session, HttpServletRequest request) {
+        Post createdPost = postService.createPostReturnPost(post, session);
+
+        // Assuming the post object has necessary data to render the post HTML in the singlepost.html template
+        ModelAndView modelAndView = new ModelAndView("layout :: post");
+        modelAndView.addObject("currentPath", request.getRequestURI());
+
+        // View name is the name of the Thymeleaf template without the .html extension
+        modelAndView.addObject("post", createdPost);
+        User tmp = (User) session.getAttribute("user");
+        User sessionUser = userService.findByUsername(tmp.getUsername());
+        DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
+        modelAndView.addObject("formatterHour", formatterHour);
+        modelAndView.addObject("sessionUser", sessionUser);
+
+        return modelAndView;
+    }
+    */
+
+
+
+    /**
      * Deletes a post from the database if it belongs to the current user.
      *
      * @param postId  the ID of the post to delete
      * @param session the HTTP session
-     * @return either "redirect:/home" or "redirect:/error" depending on whether or not the current user is allowed to delete this post
+     * @return either "redirect:/home" or "redirect:/error" depending on whether the current user is allowed to delete this post
      */
     @PostMapping("/post/{postId}/delete")
     public String deletePost(@PathVariable("postId") Long postId, HttpSession session) {
@@ -79,7 +101,7 @@ public class PostController {
      * @param model   the model for passing data to the view
      * @param session the HTTP session
      * @param request
-     * @return either "post" or "redirect:/login" depending on whether or not there is a logged-in user
+     * @return either "post" or "redirect:/login" depending on whether there is a logged-in user
      */
     @GetMapping("post/{postId}")
     public String showPostById(@PathVariable("postId") Long postId, Model model, HttpSession session, HttpServletRequest request) {
