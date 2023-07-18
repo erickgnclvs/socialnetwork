@@ -8,30 +8,35 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h2 class="text-center mt-3">Following</h2>
-            <div class="list-group mt-3">
-                <div th:if="${following.isEmpty()}">
-                    <div class="card mb-3">
-                        <div class="card-body text-center">
-                            <h5 class="card-title mb-0">You don't follow anyone</h5>
-                            <a th:href="@{/users}" class="btn btn-primary btn-sm mt-2">View All Users</a>
-                        </div>
+            <div th:if="${following.isEmpty()}">
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">You don't follow anyone</h5>
+                        <a th:href="@{/users}" class="btn btn-primary btn-sm mt-2">View All Users</a>
                     </div>
                 </div>
-                <div th:if="${!following.isEmpty()}">
+            </div>
+            <div th:if="${!following.isEmpty()}">
+                <div class="list-group mt-3">
                     <!-- For each follow in following -->
                     <div th:each="follow: ${following}">
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto pr-0">
-                                        <img th:if="${follow.getFollowed().getProfileImage() != null}" th:src="@{'/images/' + ${follow.getFollowed().getProfileImage().getId()}}" width="50" alt="Profile Picture"/>
-                                        <img th:unless="${follow.getFollowed().getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
+                                        <img th:if="${follow.getFollowed().getProfileImage() != null}"
+                                             th:src="@{'/images/' + ${follow.getFollowed().getProfileImage().getId()}}"
+                                             width="50" alt="Profile Picture"/>
+                                        <img th:unless="${follow.getFollowed().getProfileImage() != null}"
+                                             th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
 
                                     </div>
                                     <div class="col d-flex align-items-center">
                                         <div>
-                                            <h5 th:text="${follow.getFollowed().getUsername()}" class="card-title mb-0">Username</h5>
-                                            <a th:href="@{/{username}(username=${follow.getFollowed().getUsername()})}" class="btn btn-primary btn-sm mt-2">View Profile</a>
+                                            <h5 th:text="${follow.getFollowed().getUsername()}" class="card-title mb-0">
+                                                Username</h5>
+                                            <a th:href="@{/{username}(username=${follow.getFollowed().getUsername()})}"
+                                               class="btn btn-primary btn-sm mt-2">View Profile</a>
                                         </div>
                                     </div>
                                 </div>
