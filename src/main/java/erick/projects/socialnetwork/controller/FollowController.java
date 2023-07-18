@@ -3,6 +3,7 @@ package erick.projects.socialnetwork.controller;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,14 +68,20 @@ public class FollowController {
      * @param username the username of the user whose followers should be displayed
      * @param model    the model for passing data to the view
      * @param session  the HTTP session
+     * @param request
      * @return either "followers" or "redirect:/login" depending on whether or not there is a logged-in user
      */
     @GetMapping("{username}/followers")
-    public String showFollowers(@PathVariable("username") String username, Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser != null) {
+    public String showFollowers(@PathVariable("username") String username, Model model, HttpSession session, HttpServletRequest request) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
             // If user is logged in proceed
+            User sessionUser = userService.findByUsername(tmp.getUsername());
             User user = userService.findByUsername(username);
+            model.addAttribute("currentPath", request.getRequestURI());
+            // Fix this
+            model.addAttribute("sessionUser2", sessionUser);
+            // Change this for user
             model.addAttribute("sessionUser", user);
             model.addAttribute("followers", user.getFollowers());
             return "followers";
@@ -93,11 +100,16 @@ public class FollowController {
      * @return either "following" or "redirect:/login" depending on whether or not there is a logged-in user
      */
     @GetMapping("{username}/following")
-    public String showFollowing(@PathVariable("username") String username, Model model, HttpSession session) {
-        User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser != null) {
+    public String showFollowing(@PathVariable("username") String username, Model model, HttpSession session, HttpServletRequest request) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
             // If user is logged in proceed
             User user = userService.findByUsername(username);
+            User sessionUser = userService.findByUsername(tmp.getUsername());
+            model.addAttribute("currentPath", request.getRequestURI());
+            // Fix this
+            model.addAttribute("sessionUser2", sessionUser);
+            // Change this for user
             model.addAttribute("sessionUser", user);
             model.addAttribute("following", user.getFollowing());
             return "following";

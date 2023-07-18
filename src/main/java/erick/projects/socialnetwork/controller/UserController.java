@@ -9,7 +9,6 @@ import erick.projects.socialnetwork.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -205,16 +204,19 @@ public class UserController {
      *
      * @param model   the model to add attributes to
      * @param session the HTTP session
+     * @param request
      * @return either the view name "users" or a redirect to the /login endpoint
      */
     @GetMapping("/users")
-    public String showAllUsers(Model model, HttpSession session) {
+    public String showAllUsers(Model model, HttpSession session, HttpServletRequest request) {
         // Check if there is a user object in the session
         User tmp = (User) session.getAttribute("user");
         if (tmp != null) {
             // If there is, retrieve all users from the database using the userService and add them to the model along with the current user
             List<User> allUsers = userService.findAll();
-            model.addAttribute("sessionUser", tmp);
+            User sessionUser = userService.findByUsername(tmp.getUsername());
+            model.addAttribute("currentPath", request.getRequestURI());
+            model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("users", allUsers);
             // Return the view name "users"
             return "users";
