@@ -53,29 +53,6 @@ public class PostController {
     }
 
     /**
-    @PostMapping("/create-post")
-    public ModelAndView createPost(@ModelAttribute("post") Post post, HttpSession session, HttpServletRequest request) {
-        Post createdPost = postService.createPostReturnPost(post, session);
-
-        // Assuming the post object has necessary data to render the post HTML in the singlepost.html template
-        ModelAndView modelAndView = new ModelAndView("layout :: post");
-        modelAndView.addObject("currentPath", request.getRequestURI());
-
-        // View name is the name of the Thymeleaf template without the .html extension
-        modelAndView.addObject("post", createdPost);
-        User tmp = (User) session.getAttribute("user");
-        User sessionUser = userService.findByUsername(tmp.getUsername());
-        DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
-        modelAndView.addObject("formatterHour", formatterHour);
-        modelAndView.addObject("sessionUser", sessionUser);
-
-        return modelAndView;
-    }
-    */
-
-
-
-    /**
      * Deletes a post from the database if it belongs to the current user.
      *
      * @param postId  the ID of the post to delete
