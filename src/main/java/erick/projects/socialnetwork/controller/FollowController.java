@@ -81,8 +81,8 @@ public class FollowController {
             model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("user", user);
-            model.addAttribute("followers", user.getFollowers());
-            return "followers";
+            model.addAttribute("users", user.getFollowers());
+            return "followers_following_users_in_one";
         } else {
             // If user is not logged in, redirect to login page
             return "redirect:/login";

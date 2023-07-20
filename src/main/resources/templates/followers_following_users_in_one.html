@@ -7,35 +7,53 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h2 class="text-center mt-3">Followers</h2>
-            <div th:if="${followers.isEmpty()}">
-                <div class="card mb-3">
-                    <div class="card-body text-center">
-                        <h5 class="card-title mb-0">You don't have any followers</h5>
-                        <a th:href="@{/users}" class="btn btn-primary btn-sm mt-2">View All Users</a>
+            <div th:if="${currentPath.contains('following')}">
+                <h2 class="text-center mt-3">Following</h2>
+                <div th:if="${users.isEmpty()}">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">You don't follow anyone</h5>
+                            <a th:href="@{/users}" class="btn btn-primary btn-sm mt-2">View All Users</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div th:if="${!followers.isEmpty()}">
+            <div th:if="${currentPath.contains('followers')}">
+                <h2 class="text-center mt-3">Followers</h2>
+                <div th:if="${users.isEmpty()}">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">You don't have any followers</h5>
+                            <a th:href="@{/users}" class="btn btn-primary btn-sm mt-2">View All Users</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${currentPath.contains('users')}">
+                <h2 class="text-center mt-3">Followers</h2>
+            </div>
+            <div th:if="${(currentPath.contains('followers') && !users.isEmpty())
+            || (currentPath.contains('following') && !users.isEmpty())
+            || (currentPath.contains('users') && !users.isEmpty())}">
                 <div class="list-group mt-3">
-                    <!-- For each follower in followers -->
-                    <div th:each="follower: ${followers}">
+                    <!-- For each user in users -->
+                    <div th:each="user: ${users}">
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto pr-0">
-                                        <img th:if="${follower.getFollower().getProfileImage() != null}"
-                                             th:src="@{'/images/' + ${follower.getFollower().getProfileImage().getId()}}"
+                                        <img th:if="${user.getProfileImage() != null}"
+                                             th:src="@{'/images/' + ${user.getProfileImage().getId()}}"
                                              width="50" alt="Profile Picture"/>
-                                        <img th:unless="${follower.getFollower().getProfileImage() != null}"
+                                        <img th:unless="${user.getProfileImage() != null}"
                                              th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
 
                                     </div>
                                     <div class="col d-flex align-items-center">
                                         <div>
-                                            <h5 th:text="${follower.getFollower().getUsername()}"
+                                            <h5 th:text="${user.getUsername()}"
                                                 class="card-title mb-0">Username</h5>
-                                            <a th:href="@{/{username}(username=${follower.getFollower().getUsername()})}"
+                                            <a th:href="@{/{username}(username=${user.getUsername()})}"
                                                class="btn btn-primary btn-sm mt-2">View Profile</a>
                                         </div>
                                     </div>
