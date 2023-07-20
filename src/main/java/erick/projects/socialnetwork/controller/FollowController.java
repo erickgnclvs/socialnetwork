@@ -79,10 +79,8 @@ public class FollowController {
             User sessionUser = userService.findByUsername(tmp.getUsername());
             User user = userService.findByUsername(username);
             model.addAttribute("currentPath", request.getRequestURI());
-            // Fix this
-            model.addAttribute("sessionUser2", sessionUser);
-            // Change this for user
-            model.addAttribute("sessionUser", user);
+            model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("user", user);
             model.addAttribute("followers", user.getFollowers());
             return "followers";
         } else {
@@ -107,10 +105,8 @@ public class FollowController {
             User user = userService.findByUsername(username);
             User sessionUser = userService.findByUsername(tmp.getUsername());
             model.addAttribute("currentPath", request.getRequestURI());
-            // Fix this
-            model.addAttribute("sessionUser2", sessionUser);
-            // Change this for user
-            model.addAttribute("sessionUser", user);
+            model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("user", user);
             model.addAttribute("following", user.getFollowing());
             return "following";
         } else {

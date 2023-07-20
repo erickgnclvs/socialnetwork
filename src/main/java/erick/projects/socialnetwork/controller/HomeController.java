@@ -52,18 +52,18 @@ public class HomeController {
     @GetMapping("/home")
     public String showHomePage(Model model, HttpSession session, HttpServletRequest request) {
         // Check if user is logged in
-        User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser != null) {
+        User tmp = (User) session.getAttribute("user");
+        if (tmp != null) {
             // If user is logged in proceed
-            User user = userService.findByUsername(sessionUser.getUsername());
-            List<Post> feedPosts = postService.getFeedPosts(user);
+            User sessionUser = userService.findByUsername(tmp.getUsername());
+            List<Post> feedPosts = postService.getFeedPosts(sessionUser);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mma, MMMM d, yyyy");
             model.addAttribute("formatter", formatter);
             DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("K:mma");
             model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("formatterHour", formatterHour);
-            model.addAttribute("sessionUser", user);
-            model.addAttribute("user", user);
+            model.addAttribute("sessionUser", sessionUser);
+            model.addAttribute("user", sessionUser);
             model.addAttribute("feedPosts", feedPosts);
             return "home";
         } else {
