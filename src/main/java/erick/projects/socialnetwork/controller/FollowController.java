@@ -1,5 +1,6 @@
 package erick.projects.socialnetwork.controller;
 
+import erick.projects.socialnetwork.model.Follow;
 import erick.projects.socialnetwork.model.User;
 import erick.projects.socialnetwork.service.FollowService;
 import erick.projects.socialnetwork.service.UserService;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller for handling HTTP requests related to following and unfollowing users.
@@ -81,7 +85,11 @@ public class FollowController {
             model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("user", user);
-            model.addAttribute("users", user.getFollowers());
+            List<User> users = new ArrayList<>();
+            for (Follow follow : user.getFollowers()) {
+                users.add(follow.getFollower());
+            }
+            model.addAttribute("users", users);
             return "followers_following_users_in_one";
         } else {
             // If user is not logged in, redirect to login page
@@ -107,8 +115,12 @@ public class FollowController {
             model.addAttribute("currentPath", request.getRequestURI());
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("user", user);
-            model.addAttribute("following", user.getFollowing());
-            return "following";
+            List<User> users = new ArrayList<>();
+            for (Follow follow : user.getFollowing()) {
+                users.add(follow.getFollowed());
+            }
+            model.addAttribute("users", users);
+            return "followers_following_users_in_one";
         } else {
             // If user is not logged in, redirect to login page
             return "redirect:/login";

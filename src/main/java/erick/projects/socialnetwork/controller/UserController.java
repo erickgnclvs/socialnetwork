@@ -219,7 +219,7 @@ public class UserController {
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("users", allUsers);
             // Return the view name "users"
-            return "users";
+            return "followers_following_users_in_one";
         }
         // If there is no user object in the session, redirect to the /login endpoint
         return "redirect:/login";

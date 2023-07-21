@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div th:if="${currentPath.contains('users')}">
-                <h2 class="text-center mt-3">Followers</h2>
+                <h2 class="text-center mt-3">Users</h2>
             </div>
             <div th:if="${(currentPath.contains('followers') && !users.isEmpty())
             || (currentPath.contains('following') && !users.isEmpty())
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- End for each follower in followers -->
+                    <!-- End for each user in users -->
                 </div>
             </div>
         </div>
