@@ -90,7 +90,7 @@ public class FollowController {
                 users.add(follow.getFollower());
             }
             model.addAttribute("users", users);
-            return "followers_following_users_in_one";
+            return "users";
         } else {
             // If user is not logged in, redirect to login page
             return "redirect:/login";
@@ -120,7 +120,7 @@ public class FollowController {
                 users.add(follow.getFollowed());
             }
             model.addAttribute("users", users);
-            return "followers_following_users_in_one";
+            return "users";
         } else {
             // If user is not logged in, redirect to login page
             return "redirect:/login";
