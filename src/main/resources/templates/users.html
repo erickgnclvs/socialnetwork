@@ -47,14 +47,19 @@
                                              width="50" alt="Profile Picture"/>
                                         <img th:unless="${user.getProfileImage() != null}"
                                              th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
-
                                     </div>
                                     <div class="col d-flex align-items-center">
                                         <div>
                                             <h5 th:text="${user.getUsername()}"
                                                 class="card-title mb-0">Username</h5>
-                                            <a th:href="@{/{username}(username=${user.getUsername()})}"
-                                               class="btn btn-primary btn-sm mt-2">View Profile</a>
+                                            <p th:text="${user.getBiography()}">Biography</p>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="m-3"><span th:text="${user.getPosts().size()}">0</span> Posts</p>
+                                                <p class="m-3"><span th:text="${user.getLikes().size()}">0</span> Likes</p>
+                                                <a th:href="@{/{username}(username=${user.getUsername()})}"
+                                                   class="btn btn-primary btn-sm mt-2">View Profile</a>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
