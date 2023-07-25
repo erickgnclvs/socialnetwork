@@ -52,14 +52,13 @@
                                         <div>
                                             <h5 th:text="${user.getUsername()}"
                                                 class="card-title mb-0">Username</h5>
-                                            <p th:text="${user.getBiography()}">Biography</p>
+                                            <p th:text="${user.getBiography()}">Here goes the biography</p>
                                             <div class="d-flex justify-content-between">
                                                 <p class="m-3"><span th:text="${user.getPosts().size()}">0</span> Posts</p>
                                                 <p class="m-3"><span th:text="${user.getLikes().size()}">0</span> Likes</p>
                                                 <a th:href="@{/{username}(username=${user.getUsername()})}"
-                                                   class="btn btn-primary btn-sm mt-2">View Profile</a>
+                                                   class="btn btn-primary btn-sm">View Profile</a>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
