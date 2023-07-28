@@ -42,29 +42,59 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto pr-0">
-                                        <img th:if="${user.getProfileImage() != null}"
-                                             th:src="@{'/images/' + ${user.getProfileImage().getId()}}"
-                                             width="50" alt="Profile Picture"/>
-                                        <img th:unless="${user.getProfileImage() != null}"
-                                             th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
+                                        <img th:if="${user.getProfileImage() != null}" th:src="@{'/images/' + ${user.getProfileImage().getId()}}" width="50" alt="Profile Picture"/>
+                                        <img th:unless="${user.getProfileImage() != null}" th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>
                                     </div>
-                                    <div class="col d-flex align-items-center">
+                                    <div class="col d-flex align-items-start justify-content-between">
                                         <div>
-                                            <h5 th:text="${user.getUsername()}"
-                                                class="card-title mb-0">Username</h5>
+                                            <h5 th:text="${user.getUsername()}" class="card-title mb-0">Username</h5>
                                             <p th:text="${user.getBiography()}">Here goes the biography</p>
                                             <div class="d-flex justify-content-between">
                                                 <p class="m-3"><span th:text="${user.getPosts().size()}">0</span> Posts</p>
                                                 <p class="m-3"><span th:text="${user.getLikes().size()}">0</span> Likes</p>
-                                                <a th:href="@{/{username}(username=${user.getUsername()})}"
-                                                   class="btn btn-primary btn-sm">View Profile</a>
                                             </div>
                                         </div>
+                                        <a th:href="@{/{username}(username=${user.getUsername()})}" class="btn btn-primary btn-sm">View Profile</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+
+
+
+
+
+
+                    <!--                        <div class="card mb-3">-->
+<!--                            <div class="card-body">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-auto pr-0">-->
+<!--                                        <img th:if="${user.getProfileImage() != null}"-->
+<!--                                             th:src="@{'/images/' + ${user.getProfileImage().getId()}}"-->
+<!--                                             width="50" alt="Profile Picture"/>-->
+<!--                                        <img th:unless="${user.getProfileImage() != null}"-->
+<!--                                             th:src="@{/images/default}" width="50" alt="Default Profile Picture"/>-->
+<!--                                    </div>-->
+<!--                                    <div class="col d-flex align-items-center">-->
+<!--                                        <div>-->
+<!--                                            <h5 th:text="${user.getUsername()}"-->
+<!--                                                class="card-title mb-0">Username</h5>-->
+<!--                                            <p th:text="${user.getBiography()}">Here goes the biography</p>-->
+<!--                                            <div class="d-flex justify-content-between">-->
+<!--                                                <p class="m-3"><span th:text="${user.getPosts().size()}">0</span> Posts-->
+<!--                                                </p>-->
+<!--                                                <p class="m-3"><span th:text="${user.getLikes().size()}">0</span> Likes-->
+<!--                                                </p>-->
+<!--                                                <a th:href="@{/{username}(username=${user.getUsername()})}"-->
+<!--                                                   class="btn btn-primary btn-sm">View Profile</a>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <!-- End for each user in users -->
                 </div>
             </div>
